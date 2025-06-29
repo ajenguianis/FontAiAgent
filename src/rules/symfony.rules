@@ -1,10 +1,75 @@
-# Règles pour l’audit Symfony
-- Vérifier la présence de `alt` sur toutes les images dans les templates Twig.
-- S’assurer qu’un seul `<h1>` est présent par page.
-- Vérifier la présence de `<meta name="viewport">` dans `<head>`.
-- Utiliser des balises sémantiques : `<header>`, `<nav>`, `<main>`, `<footer>`.
-- Vérifier l’utilisation de variables CSS dans `assets/**/*.scss`.
-- S’assurer que les scripts JS utilisent `const`/`let` au lieu de `var`.
-- Vérifier la compatibilité mobile-first dans les styles SCSS.
-- Appliquer les heuristiques UX de Nielsen (voir config/ux-heuristics.json).
-- Générer des recommandations pour intégrer glassmorphism ou mode sombre.
+# ✅ Règles Avancées d’Audit pour les Projets Symfony
+
+Cette checklist couvre les aspects frontend et UX liés aux projets Symfony : templates Twig, SCSS, JavaScript, accessibilité, responsive design et bonnes pratiques UI/UX.
+
+---
+
+## 🖼️ Templates Twig & Sémantique HTML
+
+- ✅ Chaque page doit contenir **un seul `<h1>`**.
+- 🖼️ Toutes les images (`<img>`) doivent inclure un attribut `alt` descriptif.
+- 📱 Le tag `<meta name="viewport" content="width=device-width, initial-scale=1.0">` est requis dans le `<head>`.
+- 🏷️ Utiliser des **balises HTML sémantiques** (`<header>`, `<nav>`, `<main>`, `<footer>`, `<section>`, etc.).
+- 🧼 Nettoyer le code Twig : éviter la logique métier dans les vues (pas d'appels à des services, pas de calculs complexes).
+
+---
+
+## 🎨 SCSS / CSS
+
+- 💡 Utiliser des **variables CSS/SASS centralisées** pour les couleurs, marges, typographies, etc.
+- 📱 Approche **mobile-first obligatoire** : styles de base pour mobile, puis breakpoints en `min-width`.
+- 🎨 Prévoir le **mode sombre (dark mode)** en utilisant des variables CSS dynamiques ou `prefers-color-scheme`.
+- ✨ Proposer l’utilisation du **glassmorphism** ou autres tendances visuelles si cohérentes avec le design global.
+- 🧩 Organiser les fichiers SCSS par composant ou par fonctionnalité (architecture ITCSS ou BEM).
+
+---
+
+## 📜 JavaScript
+
+- ✅ Utiliser `const` et `let` — **interdiction de `var`**.
+- 🧠 Écrire du code modulaire et clair, en ES6+.
+- 📦 Charger les scripts de manière asynchrone ou différée (`defer`, `async`) pour améliorer les performances.
+- 🧪 S’assurer que les comportements dynamiques JS sont testables et accessibles (gestion du focus, navigation clavier, etc.).
+
+---
+
+## ♿ Accessibilité & Conformité
+
+- 🧭 Vérifier la **navigation au clavier** (via `tabindex`, `:focus`, `aria-*` si besoin).
+- 📏 Contraste minimum AA requis entre texte et arrière-plan (outil : axe, Lighthouse).
+- 🗣️ Annonces vocales (`aria-live`, `role="alert"`) pour les messages dynamiques.
+- 🔍 Aucun contenu textuel essentiel ne doit être encapsulé uniquement dans des images (accessibilité screen reader).
+
+---
+
+## 🚀 Responsive & Performance
+
+- 📱 Interface 100% **responsive**, testée sur plusieurs tailles d’écran (mobile, tablette, desktop).
+- 🧩 Images optimisées (`<picture>`, `srcset`, format WebP si possible).
+- 🔄 Lazy loading des images et contenus hors écran (`loading="lazy"`).
+- ⚡ Analyse de performance avec **Lighthouse**, vérification du **Time to Interactive**, **First Contentful Paint**, etc.
+
+---
+
+## 🧠 UX & Heuristiques
+
+- 🧩 Application des **10 heuristiques de Nielsen** :
+  - Visibilité de l’état du système
+  - Correspondance système/réalité
+  - Prévention des erreurs
+  - Contrôle utilisateur
+  - Cohérence & standards
+  - Aide & documentation minimale, etc.
+- 📦 Fichier de référence : `config/ux-heuristics.json`
+- 🎯 Intégration de **micro-interactions utiles** :
+  - Feedback après actions utilisateur (formulaire, validation, erreurs)
+  - Animation discrète des transitions ou chargements (`spinner`, `skeleton`, etc.)
+
+---
+
+## 🧪 Testabilité & Maintenabilité
+
+- ✅ Code HTML/Twig **lisible, bien indenté, sans duplication**.
+- 🧪 Tests fonctionnels ou tests visuels sur les pages critiques (ex. Cypress, Panther, Playwright).
+- 🔁 Structure de projet claire (`templates/base.html.twig`, layout, blocs, etc.).
+- 📚 Suivi de la **documentation technique et design** (figma, notion, styleguide).
