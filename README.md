@@ -1,93 +1,132 @@
 # FontAiAgent
 
-**FontAiAgent** est un outil d’optimisation frontend alimenté par l’IA, conçu pour améliorer l’UX/UI, la performance, et l’accessibilité des projets web, avec une expertise équivalente à 20 ans d’expérience. Spécialisé dans **Symfony**, **JavaScript/TypeScript** (React, Vue), et les tendances design 2025 (glassmorphism, micro-interactions, mode sombre), il analyse, audite, et optimise automatiquement vos interfaces pour une expérience utilisateur moderne et intuitive.
+**FontAiAgent** est un outil d’optimisation frontend alimenté par l’IA, conçu pour améliorer l’UX/UI, la performance et l’accessibilité des projets web. Spécialisé dans **Symfony**, **JavaScript/TypeScript** (React, Vue) et les tendances design 2025 (glassmorphism, micro-interactions, mode sombre), il s’intègre directement dans votre IDE pour optimiser vos interfaces de manière moderne et intuitive.
 
 [![CI/CD](https://github.com/ajenguianis/FontAiAgent/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ajenguianis/FontAiAgent/actions)
 
 ## 🚀 Fonctionnalités
 
-- **Analyse UX/UI** : Évalue l’accessibilité (WCAG 2.1 AA), la sémantique HTML, et les performances (FCP < 1.8s, LCP < 2.5s).
-- **Optimisation Automatisée** : Corrige les problèmes comme les images sans `alt`, modernise le code JS (`const`/`let`), et ajoute des meta viewport.
+- **Analyse UX/UI** : Évalue l’accessibilité (WCAG 2.1 AA, score ≥ 90/100), la sémantique HTML et les performances (FCP < 1.8s, LCP < 2.5s).
+- **Optimisation Automatisée** : Corrige les images sans `alt`, modernise le code JS (`const`/`let`), ajoute des meta viewport, et plus.
+- **Sauvegarde Automatique** : Sauvegarde les fichiers modifiés dans `.vscode/.agent_backups/`.
+- **Interaction Utilisateur** : Pose des questions pour clarifier vos priorités (accessibilité, performance, etc.) et collecte votre feedback après chaque itération.
 - **Support Multi-Technologies** : Compatible avec Symfony (Twig, SCSS), React, Vue, et autres frameworks JS/TS.
-- **Tendances 2025** : Intègre des recommandations créatives (glassmorphism, micro-interactions, mode sombre).
-- **Sauvegarde et Rollback** : Suivi des modifications avec sauvegardes automatiques et restauration facile.
-- **Intégration IDE** : Configurations pour VS Code, Cursor, et VoidIDE via `.vscode/tasks.json`.
+- **Tendances 2025** : Intègre glassmorphism, micro-interactions et mode sombre selon vos préférences.
+- **Intégration IDE** : Tâches prêtes pour VS Code, Cursor, VoidIDE via `.vscode/tasks.json`.
 - **CI/CD** : Tests unitaires et linting via GitHub Actions.
-- **Modularité** : Code TypeScript modulaire, règles personnalisables, et prompts pour IA.
+- **Modularité** : Code TypeScript modulaire, règles personnalisables et prompts pour IA.
 
-## 📦 Installation
+## 📦 Installation dans Votre Projet
+
+**FontAiAgent** s’utilise comme un outil utilisateur, intégré dans votre IDE via le dossier `.vscode/`. Suivez ces étapes pour l’installer dans votre projet existant :
 
 1. **Cloner le dépôt** :
    ```bash
    git clone https://github.com/ajenguianis/FontAiAgent.git
-   cd FontAiAgent
    ```
 
-2. **Installer les dépendances** :
-   ```bash
-   npm install
-   npm install -g ts-node
-   sudo apt-get install jq  # Ubuntu/Debian
-   brew install jq         # macOS
-   ```
+2. **Copier FontAiAgent dans votre projet** :
+   - Exécutez le script d’installation pour copier les fichiers dans `.vscode/font-ai-agent/` :
+     ```bash
+     bash FontAiAgent/install-font-ai-agent.sh FontAiAgent /chemin/vers/votre-projet
+     ```
+   - Cela crée `.vscode/font-ai-agent/` avec tous les scripts, configurations et dépendances nécessaires.
 
-3. **Configurer TypeScript** (optionnel) :
-   Vérifiez `tsconfig.json` pour les paramètres de compilation.
+3. **Prérequis** :
+   - Assurez-vous que Node.js, `ts-node` et `jq` sont installés globalement :
+     ```bash
+     npm install -g ts-node
+     sudo apt-get install jq  # Ubuntu/Debian
+     brew install jq         # macOS
+     ```
 
-## 🛠️ Utilisation
+4. **Configurer `.vscode/tasks.json`** :
+   - Copiez le fichier `.vscode/tasks.json` depuis le dépôt **FontAiAgent** :
+     ```bash
+     cp FontAiAgent/.vscode/tasks.json /chemin/vers/votre-projet/.vscode/
+     ```
 
-**FontAiAgent** suit une approche itérative basée sur la méthodologie PDCA (Plan-Do-Check-Act) pour analyser, optimiser, vérifier, et finaliser les améliorations de votre projet :
+## 🛠️ Utilisation dans Votre IDE
 
-- **Plan** : Analyse initiale et définition des objectifs SMART (ex. accessibilité ≥ 90/100).
-- **Do** : Application des corrections automatiques ou recommandations manuelles.
-- **Check** : Vérification des progrès et confirmation manuelle (option `--confirm`).
-- **Act** : Génération d’un rapport final et ajustements pour les itérations suivantes.
+**FontAiAgent** suit une méthodologie itérative PDCA (Plan-Do-Check-Act) pour analyser, optimiser, vérifier et finaliser les améliorations de votre projet :
+- **Plan** : Analyse initiale, questions pour clarifier vos priorités, et définition des objectifs SMART.
+- **Do** : Application des corrections automatiques avec sauvegarde dans `.vscode/.agent_backups/`.
+- **Check** : Vérification des progrès, collecte de feedback, et confirmation manuelle (`--confirm`).
+- **Act** : Génération d’un rapport final dans `.vscode/final-report.md`.
 
-### 1. Analyser et optimiser un projet local
+### Optimiser un Projet Existant dans Votre IDE
+
+1. **Ouvrir votre projet** :
+   - Ouvrez le dossier de votre projet (ex. `/mon-projet-symfony/`) dans VS Code, Cursor ou VoidIDE.
+
+2. **Installer FontAiAgent** :
+   - Exécutez le script d’installation (voir **Installation** ci-dessus) pour copier **FontAiAgent** dans `.vscode/font-ai-agent/`.
+
+3. **Lancer l’optimisation** :
+   - Ouvrez la palette de commandes (`Ctrl+Shift+P` ou `Cmd+Shift+P`).
+   - Tapez `Tasks: Run Task` et sélectionnez `FontAiAgent: Optimize Project`.
+   - Répondez aux questions interactives pour définir vos priorités (ex. accessibilité, fichiers spécifiques, tendances de design).
+   - Cela exécute :
+     ```bash
+     ts-node .vscode/font-ai-agent/scripts/front-agent-job.ts --project .
+     ```
+   - Pour une optimisation interactive (confirmation et feedback après chaque itération) :
+     - Sélectionnez `FontAiAgent: Optimize Project (Interactive)`.
+
+4. **Vérifier les résultats** :
+   - Les rapports sont générés dans `.vscode/iteration-N/` (ex. `.vscode/iteration-1/analysis-data.json`, `.vscode/iteration-1/ux-report.md`).
+   - Consultez `.vscode/final-report.md` pour un résumé des améliorations et votre feedback.
+   - Les sauvegardes sont stockées dans `.vscode/.agent_backups/`.
+
+5. **Appliquer les recommandations manuelles** (si nécessaire) :
+   - Ouvrez `.vscode/iteration-N/ux-report.md` pour les recommandations.
+   - Utilisez les prompts dans `.vscode/font-ai-agent/prompts/` avec Trae, Cursor ou VS Code.
+
+**Exemple : Optimiser un projet Symfony** :
+- Projet dans `/mon-projet-symfony/`.
+- Après installation, ouvrez le projet dans VS Code.
+- Lancez `FontAiAgent: Optimize Project` via la palette de commandes.
+- Répondez aux questions (ex. "Prioriser l’accessibilité", "Fichiers: templates/home.twig", "Tendances: dark mode").
+- Fournissez un feedback après chaque itération (ex. "Focusing more on performance next time").
+- Vérifiez `.vscode/final-report.md` pour les améliorations.
+
+### Autres Cas d’Utilisation
+
+#### Analyser une URL
 ```bash
-ts-node src/scripts/front-agent-job.ts --project /chemin/vers/votre-projet --confirm
+ts-node .vscode/font-ai-agent/scripts/front-agent-job.ts --url https://example.com --screenshot --performance
 ```
-Sorties dans `tmp/iteration-N/` et `tmp/final-report.md`.
 
-### 2. Analyser une URL
+#### Analyser un fichier HTML
 ```bash
-ts-node src/scripts/front-agent-job.ts --url https://example.com --screenshot --performance
+ts-node .vscode/font-ai-agent/scripts/front-agent-job.ts --html /chemin/vers/fichier.html --deep
 ```
 
-### 3. Analyser un fichier HTML
+#### Auditer un projet Symfony
 ```bash
-ts-node src/scripts/front-agent-job.ts --html /chemin/vers/fichier.html --deep
+ts-node .vscode/font-ai-agent/scripts/audit-symfony.ts --project .
 ```
 
-### 4. Auditer un projet Symfony
+#### Auditer un projet JS/TS
 ```bash
-ts-node src/scripts/audit-symfony.ts --project /chemin/vers/projet-symfony
+ts-node .vscode/font-ai-agent/scripts/audit-js.ts --project .
 ```
 
-### 5. Auditer un projet JS/TS
+#### Restaurer une sauvegarde
 ```bash
-ts-node src/scripts/audit-js.ts --project /chemin/vers/projet-js
+bash .vscode/font-ai-agent/scripts/rollback.sh 20250629-1304
 ```
 
-### 6. Suivre et sauvegarder les modifications
+#### Supprimer les sauvegardes
 ```bash
-ts-node src/scripts/track-changes.ts --project /chemin/vers/projet
-```
-
-### 7. Restaurer une sauvegarde
-```bash
-bash src/scripts/rollback.sh 20250629-1304
-```
-
-### 8. Supprimer les sauvegardes
-```bash
-bash src/scripts/clear-backups.sh 20250629-1304
+bash .vscode/font-ai-agent/scripts/clear-backups.sh 20250629-1304
 ```
 
 ## 🧪 Tests
 
-Exécutez les tests unitaires pour valider le fonctionnement :
+Pour valider l’installation, exécutez les tests depuis `.vscode/font-ai-agent/` :
 ```bash
+cd .vscode/font-ai-agent
 npm test
 ```
 
@@ -98,35 +137,28 @@ npm run lint
 
 ## 🖥️ Intégration avec les IDEs
 
-- **VS Code / Cursor / VoidIDE** : Copiez `.vscode/tasks.json` dans votre projet et utilisez le command palette (`Ctrl+Shift+P` ou `Cmd+Shift+P`) pour exécuter les tâches (`Tasks: Run Task`).
-- **Trae** : Chargez les fichiers `src/rules/*.rules` dans Agents → New Agent.
+- **VS Code / Cursor / VoidIDE** : Utilisez `.vscode/tasks.json` pour exécuter les tâches via `Tasks: Run Task`.
+- **Trae** : Chargez les fichiers `.vscode/font-ai-agent/rules/*.rules` dans Agents → New Agent.
 
-## 📂 Structure du Projet
+## 📂 Structure de FontAiAgent dans Votre Projet
 
+Après installation, votre projet contiendra :
 ```
-FontAiAgent/
-├── .github/
-│   ├── workflows/         # GitHub Actions pour CI/CD
-│   ├── ISSUE_TEMPLATE.md  # Modèle pour issues
-│   ├── PULL_REQUEST_TEMPLATE.md # Modèle pour PRs
-│   ├── CODE_OF_CONDUCT.md # Code de conduite
-│   ├── CONTRIBUTING.md    # Guide de contribution
+/chemin/vers/votre-projet/
 ├── .vscode/
-│   ├── tasks.json         # Tâches pour VS Code, Cursor, VoidIDE
-├── src/
-│   ├── scripts/           # Scripts pour analyse, audit, et optimisation
-│   ├── config/            # Préférences de design et heuristiques UX
-│   ├── rules/             # Règles pour Trae
-│   ├── prompts/           # Prompts pour optimisations manuelles
-│   ├── tests/             # Tests unitaires
-├── tmp/                   # Sorties temporaires (Git-ignoré)
-├── .agent_backups/        # Sauvegardes (Git-ignoré)
-├── node_modules/          # Dépendances (Git-ignoré)
-├── .gitignore             # Fichiers ignorés par Git
-├── LICENSE                # Licence MIT
-├── README.md              # Documentation principale
-├── package.json           # Dépendances et scripts
-├── tsconfig.json          # Configuration TypeScript
+│   ├── font-ai-agent/
+│   │   ├── scripts/           # Scripts pour analyse et optimisation
+│   │   ├── config/            # Préférences de design et heuristiques UX
+│   │   ├── rules/             # Règles pour Trae
+│   │   ├── prompts/           # Prompts pour optimisations manuelles
+│   │   ├── tests/             # Tests unitaires
+│   │   ├── package.json       # Dépendances de l’agent
+│   │   ├── node_modules/      # Dépendances installées
+│   ├── .agent_backups/        # Sauvegardes automatiques
+│   ├── iteration-N/           # Rapports d’itération
+│   ├── final-report.md        # Rapport final
+│   ├── tasks.json             # Tâches pour l’IDE
+├── .gitignore                 # Ajoutez .vscode/font-ai-agent/node_modules/
 ```
 
 ## 🤝 Contribuer
@@ -135,8 +167,8 @@ FontAiAgent/
    ```bash
    git checkout -b feature/votre-fonctionnalité
    ```
-2. Suivez le guide de style dans `src/config/style-guide.json`.
-3. Ajoutez des tests dans `src/tests/`.
+2. Suivez le guide de style dans `.vscode/font-ai-agent/config/style-guide.json`.
+3. Ajoutez des tests dans `.vscode/font-ai-agent/tests/`.
 4. Soumettez une pull request en utilisant le modèle dans `.github/PULL_REQUEST_TEMPLATE.md`.
 
 Consultez `.github/CONTRIBUTING.md` pour plus de détails.
@@ -151,4 +183,4 @@ Pour questions ou suggestions, ouvrez une issue sur [GitHub](https://github.com/
 
 ---
 
-**FontAiAgent** : Votre partenaire pour des interfaces modernes, accessibles, et performantes. Propulsé par une expertise senior et une créativité sans limite.
+**FontAiAgent** : Votre partenaire pour des interfaces modernes, accessibles et performantes. Propulsé par une expertise senior et une créativité sans limite.
