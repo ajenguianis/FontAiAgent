@@ -80,8 +80,14 @@ bash src/scripts/clear-backups.sh 20250629-1304
 ## 🧪 Tests
 
 Exécutez les tests unitaires pour valider le fonctionnement :
+## Quality Assurance
+
 ```bash
+# Run full test suite
 npm test
+
+# Generate documentation
+npx typedoc --out docs src/
 ```
 
 Linting du code :
