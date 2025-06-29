@@ -1,0 +1,50 @@
+{
+    "colors": {
+        "primary": "#0059FF",
+        "secondary": "#1F2A44",
+        "accent": "#10B981",
+        "neutral": "#F9FAFB",
+        "text": "#111827"
+    },
+    "typography": {
+        "fontFamilies": [
+            "Inter",
+            "Roboto",
+            "Poppins",
+            "sans-serif"
+        ],
+        "baseSize": "16px",
+        "scale": 1.2,
+        "weights": [
+            "400",
+            "500",
+            "600",
+            "700"
+        ]
+    },
+    "spacing": {
+        "base": "8px",
+        "scale": 1.5,
+        "breakpoints": {
+            "sm": "640px",
+            "md": "768px",
+            "lg": "1024px",
+            "xl": "1280px"
+        }
+    },
+    "accessibility": {
+        "contrastRatio": 4.5,
+        "wcagLevel": "AA"
+    },
+    "performance": {
+        "fcpTarget": 1800,
+        "lcpTarget": 2500,
+        "loadTimeTarget": 3000
+    },
+    "designTrends": [
+        "glassmorphism",
+        "micro-interactions",
+        "dark-mode",
+        "neumorphism"
+    ]
+}

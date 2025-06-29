@@ -1,0 +1,119 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run FontAiAgent Job",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                "src/scripts/front-agent-job.ts",
+                "--project",
+                "${input:projectPath}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Exécuter le workflow itératif d’optimisation frontend"
+        },
+        {
+            "label": "Run UX Analysis",
+            "type": "shell",
+            "command": "node",
+            "args": [
+                "src/scripts/ux-analyzer.js",
+                "--project",
+                "${input:projectPath}"
+            ],
+            "group": "build",
+            "detail": "Analyser l’UX/UI du projet"
+        },
+        {
+            "label": "Run Symfony Audit",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                "src/scripts/audit-symfony.ts",
+                "--project",
+                "${input:projectPath}"
+            ],
+            "group": "build",
+            "detail": "Auditer un projet Symfony (Twig, SCSS, JS)"
+        },
+        {
+            "label": "Run JS/TS Audit",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                "src/scripts/audit-js.ts",
+                "--project",
+                "${input:projectPath}"
+            ],
+            "group": "build",
+            "detail": "Auditer un projet JavaScript/TypeScript"
+        },
+        {
+            "label": "Track Changes",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                "src/scripts/track-changes.ts",
+                "--project",
+                "${input:projectPath}"
+            ],
+            "group": "build",
+            "detail": "Suivre et sauvegarder les fichiers modifiés"
+        },
+        {
+            "label": "Rollback Changes",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "src/scripts/rollback.sh",
+                "${input:timestamp}",
+                "${input:tech}",
+                "${input:file}"
+            ],
+            "group": "build",
+            "detail": "Restaurer les fichiers à partir d’une sauvegarde"
+        },
+        {
+            "label": "Clear Backups",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "src/scripts/clear-backups.sh",
+                "${input:timestamp}",
+                "${input:tech}"
+            ],
+            "group": "build",
+            "detail": "Supprimer les sauvegardes"
+        }
+    ],
+    "inputs": [
+        {
+            "id": "projectPath",
+            "type": "promptString",
+            "description": "Chemin du projet à analyser (ex. /chemin/vers/projet)",
+            "default": "${workspaceFolder}"
+        },
+        {
+            "id": "timestamp",
+            "type": "promptString",
+            "description": "Timestamp de la sauvegarde (ex. 20250629-1304, vide pour tous)",
+            "default": ""
+        },
+        {
+            "id": "tech",
+            "type": "promptString",
+            "description": "Technologie à restaurer/supprimer (Twig, CSS, JS, vide pour tous)",
+            "default": ""
+        },
+        {
+            "id": "file",
+            "type": "promptString",
+            "description": "Fichier spécifique à restaurer (ex. templates/base.html.twig, vide pour tous)",
+            "default": ""
+        }
+    ]
+}

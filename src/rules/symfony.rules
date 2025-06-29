@@ -1,0 +1,10 @@
+# Règles pour l’audit Symfony
+- Vérifier la présence de `alt` sur toutes les images dans les templates Twig.
+- S’assurer qu’un seul `<h1>` est présent par page.
+- Vérifier la présence de `<meta name="viewport">` dans `<head>`.
+- Utiliser des balises sémantiques : `<header>`, `<nav>`, `<main>`, `<footer>`.
+- Vérifier l’utilisation de variables CSS dans `assets/**/*.scss`.
+- S’assurer que les scripts JS utilisent `const`/`let` au lieu de `var`.
+- Vérifier la compatibilité mobile-first dans les styles SCSS.
+- Appliquer les heuristiques UX de Nielsen (voir config/ux-heuristics.json).
+- Générer des recommandations pour intégrer glassmorphism ou mode sombre.

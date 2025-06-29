@@ -1,0 +1,25 @@
+# Dossiers temporaires
+tmp/
+.agent_backups/
+
+# Dépendances
+node_modules/
+
+# Fichiers de build
+dist/
+build/
+
+# Fichiers d’environnement
+.env
+.env.local
+
+# Fichiers de lock
+package-lock.json
+composer.lock
+
+# Fichiers de logs
+*.log
+
+# Fichiers système
+.DS_Store
+Thumbs.db

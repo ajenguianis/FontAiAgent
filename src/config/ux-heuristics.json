@@ -1,0 +1,55 @@
+{
+    "javascript": {
+        "variableDeclaration": [
+            "const",
+            "let"
+        ],
+        "indentation": "2 spaces",
+        "namingConvention": "camelCase",
+        "maxLineLength": 100,
+        "frameworks": [
+            "React",
+            "Vue",
+            "Svelte"
+        ]
+    },
+    "css": {
+        "useVariables": true,
+        "variablePrefix": "--",
+        "namingConvention": "kebab-case",
+        "responsiveApproach": "mobile-first",
+        "preferredUnits": [
+            "rem",
+            "em",
+            "%",
+            "vw",
+            "vh"
+        ]
+    },
+    "html": {
+        "semanticElements": [
+            "header",
+            "nav",
+            "main",
+            "footer",
+            "article",
+            "section",
+            "aside"
+        ],
+        "maxNestingDepth": 5,
+        "useAria": true
+    },
+    "recommendedTools": {
+        "bundler": [
+            "Vite",
+            "Webpack"
+        ],
+        "linter": [
+            "ESLint",
+            "Stylelint"
+        ],
+        "formatter": [
+            "Prettier"
+        ]
+    }
+}
