@@ -36,9 +36,16 @@
 
 ## 🛠️ Utilisation
 
+**FontAiAgent** suit une approche itérative basée sur la méthodologie PDCA (Plan-Do-Check-Act) pour analyser, optimiser, vérifier, et finaliser les améliorations de votre projet :
+
+- **Plan** : Analyse initiale et définition des objectifs SMART (ex. accessibilité ≥ 90/100).
+- **Do** : Application des corrections automatiques ou recommandations manuelles.
+- **Check** : Vérification des progrès et confirmation manuelle (option `--confirm`).
+- **Act** : Génération d’un rapport final et ajustements pour les itérations suivantes.
+
 ### 1. Analyser et optimiser un projet local
 ```bash
-ts-node src/scripts/front-agent-job.ts --project /chemin/vers/votre-projet
+ts-node src/scripts/front-agent-job.ts --project /chemin/vers/votre-projet --confirm
 ```
 Sorties dans `tmp/iteration-N/` et `tmp/final-report.md`.
 
@@ -80,14 +87,8 @@ bash src/scripts/clear-backups.sh 20250629-1304
 ## 🧪 Tests
 
 Exécutez les tests unitaires pour valider le fonctionnement :
-## Quality Assurance
-
 ```bash
-# Run full test suite
 npm test
-
-# Generate documentation
-npx typedoc --out docs src/
 ```
 
 Linting du code :

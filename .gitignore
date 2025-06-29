@@ -22,4 +22,8 @@ composer.lock
 
 # Fichiers système
 .DS_Store
-Thumbs.db
+Thumbs.
+
+tmp/
+.agent_backups/
+node_modules/

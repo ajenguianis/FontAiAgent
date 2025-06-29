@@ -5,6 +5,7 @@ import * as path from 'path';
 import { program } from 'commander';
 import { detectProjectType } from './detect-project';
 import { v4 as uuidv4 } from 'uuid';
+import * as readline from 'readline';
 
 // Configuration CLI
 program
@@ -16,10 +17,11 @@ program
     .option('--performance', 'Analyser les performances')
     .option('--deep', 'Analyse approfondie')
     .option('--stop', 'Arrêter après une itération')
+    .option('--confirm', 'Demander une confirmation manuelle après chaque itération')
     .option('--max-iterations <number>', 'Nombre maximum d’itérations', '5')
     .parse();
 
-const { url, html, project, output, screenshot, performance, deep, stop, maxIterations } = program.opts();
+const { url, html, project, output, screenshot, performance, deep, stop, confirm, maxIterations } = program.opts();
 if (!url && !html && !project) {
     console.error('❌ Erreur : URL, fichier HTML, ou --project requis');
     process.exit(1);
@@ -51,10 +53,15 @@ interface Objective {
     recommendation?: string;
 }
 
-// Exécution de l’analyse UX
+// Exécution de l’analyse UX (Étape Plan du PDCA)
 async function runAnalysis(iteration: number): Promise<AnalysisData> {
     const outputDir = path.join(output, `iteration-${iteration}`);
     await fs.ensureDir(outputDir);
+    const uxAnalyzerPath = path.join(__dirname, 'ux-analyzer.js');
+    if (!fs.existsSync(uxAnalyzerPath)) {
+        console.error(`❌ Erreur : Fichier ${uxAnalyzerPath} introuvable`);
+        process.exit(1);
+    }
     const args = [
         url ? `--url ${url}` : '',
         html ? `--html ${html}` : '',
@@ -64,13 +71,23 @@ async function runAnalysis(iteration: number): Promise<AnalysisData> {
         performance ? '--performance' : '',
         deep ? '--deep' : '',
     ].filter(Boolean).join(' ');
-    console.log(`🔍 Exécution de l’analyse UX (itération ${iteration})...`);
-    execSync(`node ${path.join(__dirname, 'ux-analyzer.js')} ${args}`, { stdio: 'inherit' });
-    const analysisData = await fs.readJson(path.join(outputDir, 'analysis-data.json'));
-    return analysisData;
+    console.log(`🔍 [PDCA: Plan] Exécution de l’analyse UX (itération ${iteration})...`);
+    try {
+        execSync(`node ${uxAnalyzerPath} ${args}`, { stdio: 'inherit' });
+        const analysisDataPath = path.join(outputDir, 'analysis-data.json');
+        if (!fs.existsSync(analysisDataPath)) {
+            console.error(`❌ Erreur : Résultat de l’analyse ${analysisDataPath} non généré`);
+            process.exit(1);
+        }
+        const analysisData = await fs.readJson(analysisDataPath);
+        return analysisData;
+    } catch (e) {
+        console.error(`❌ Erreur lors de l’analyse UX : ${e.message}`);
+        process.exit(1);
+    }
 }
 
-// Définition des objectifs SMART
+// Définition des objectifs SMART (Étape Plan du PDCA)
 function setSmartObjectives(analysis: AnalysisData, iteration: number): Objective[] {
     const outputDir = path.join(output, `iteration-${iteration}`);
     const filesToBackup = fs.existsSync(path.join(outputDir, 'source.html'))
@@ -144,20 +161,35 @@ function setSmartObjectives(analysis: AnalysisData, iteration: number): Objectiv
             recommendation: analysis.recommendations.creative.find(r => r.includes('design tokens')),
         });
     }
-    console.log(`🎯 Objectifs SMART (itération ${iteration}) :`, objectives);
+    console.log(`🎯 [PDCA: Plan] Objectifs SMART définis (itération ${iteration}) :`, objectives);
     fs.writeJsonSync(path.join(outputDir, 'objectives.json'), objectives, { spaces: 2 });
     return objectives;
 }
 
-// Application des corrections
+// Confirmation manuelle (Étape Check du PDCA)
+async function confirmIteration(iteration: number): Promise<boolean> {
+    if (!confirm) return true;
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+    });
+    return new Promise(resolve => {
+        rl.question(`[PDCA: Check] Continuer avec l’itération ${iteration + 1} ? (y/N) : `, answer => {
+            rl.close();
+            resolve(answer.toLowerCase() === 'y');
+        });
+    });
+}
+
+// Application des corrections (Étape Do du PDCA)
 async function actOnObjectives(objectives: Objective[], iteration: number) {
     const outputDir = path.join(output, `iteration-${iteration}`);
     for (const obj of objectives) {
-        console.log(`🔧 Application de l’objectif : ${obj.description}`);
+        console.log(`🔧 [PDCA: Do] Application de l’objectif : ${obj.description}`);
         if (obj.file && fs.existsSync(obj.file)) {
             console.log(`📥 Sauvegarde de ${obj.file}`);
-            execSync(`bash ${path.join(__dirname, 'backup.sh')} ${obj.file}`, { stdio: 'inherit' });
             try {
+                execSync(`bash ${path.join(__dirname, 'backup.sh')} ${obj.file}`, { stdio: 'inherit' });
                 if (['accessibility-score', 'semantic-structure', 'viewport-meta'].includes(obj.id.split('-')[0])) {
                     console.log(`🚀 Application automatique pour ${obj.id} sur ${obj.file}`);
                     execSync(`ts-node ${path.join(__dirname, 'enhance-code.ts')} --file ${obj.file} --objective ${obj.id}`, {
@@ -175,7 +207,7 @@ async function actOnObjectives(objectives: Objective[], iteration: number) {
     }
 }
 
-// Vérification des progrès
+// Vérification des progrès (Étape Check du PDCA)
 async function checkProgress(analysis: AnalysisData, objectives: Objective[], iteration: number): Promise<boolean> {
     const outputDir = path.join(output, `iteration-${iteration}`);
     const achieved: string[] = [];
@@ -193,14 +225,14 @@ async function checkProgress(analysis: AnalysisData, objectives: Objective[], it
         }
     }
     const checkResults = { achieved, remaining, allMet: remaining.length === 0 };
-    console.log(`✅ Résultats de vérification (itération ${iteration}) :`, checkResults);
+    console.log(`✅ [PDCA: Check] Résultats de vérification (itération ${iteration}) :`, checkResults);
     fs.writeJsonSync(path.join(outputDir, 'check-results.json'), checkResults, { spaces: 2 });
     return checkResults.allMet;
 }
 
-// Génération du rapport final
+// Génération du rapport final (Étape Act du PDCA)
 async function generateFinalReport(analyses: AnalysisData[], iterations: number) {
-    const finalReport = `# 📋 Rapport Final FrontAgent
+    const finalReport = `# 📋 Rapport Final FontAiAgent
 
 ## Résumé
 - **Total des itérations** : ${iterations}
@@ -218,47 +250,55 @@ ${analyses[iterations - 1].recommendations.urgentFixes.length === 0
             ? '- Tous les problèmes urgents résolus.'
             : `- Problèmes restants :\n${analyses[iterations - 1].recommendations.urgentFixes.map((issue: string) => `  - ${issue}`).join('\n')}`}
 
-## Recommandations créatives
+## Recommandations Créatives
 ${analyses[iterations - 1].recommendations.creative.map((r, i) => `${i + 1}. ${r}`).join('\n')}
 
-## Prochaines étapes
+## Prochaines Étapes
 - Consultez les sorties dans tmp/iteration-${iterations}/
 - Appliquez les corrections manuelles avec prompts/ux-audit.md dans Trae, Cursor, ou VS Code
 - Relancez avec \`ts-node src/scripts/front-agent-job.ts\` si nécessaire
 `;
     const finalReportPath = path.join(output, 'final-report.md');
     await fs.writeFile(finalReportPath, finalReport);
-    console.log(`📄 Rapport final généré : ${finalReportPath}`);
+    console.log(`📄 [PDCA: Act] Rapport final généré : ${finalReportPath}`);
 }
 
 // Fonction principale
 (async () => {
-    const projectInfo = detectProjectType();
-    console.log(`🚀 Démarrage du job FrontAgent pour un projet ${projectInfo.type || 'web'}`);
+    console.log(`🚀 Démarrage du job FontAiAgent pour un projet ${detectProjectType().type || 'web'}`);
     await fs.ensureDir(output);
     let iteration = 1;
     const analyses: AnalysisData[] = [];
 
     while (iteration <= parseInt(maxIterations)) {
         console.log(`🔄 Itération ${iteration}`);
+        // Étape Plan : Analyse initiale et définition des objectifs
         const analysis = await runAnalysis(iteration);
         analyses.push(analysis);
         const objectives = setSmartObjectives(analysis, iteration);
         if (objectives.length === 0) {
-            console.log('🎉 Tous les objectifs atteints !');
+            console.log('🎉 [PDCA: Check] Tous les objectifs atteints !');
             break;
         }
+        // Étape Do : Application des corrections
         await actOnObjectives(objectives, iteration);
+        // Étape Check : Vérification des progrès
         const newAnalysis = await runAnalysis(iteration);
         analyses.push(newAnalysis);
         const allMet = await checkProgress(newAnalysis, objectives, iteration);
         if (allMet || stop) {
-            console.log(`🛑 Arrêt : ${allMet ? 'Tous les objectifs atteints' : 'Option --stop spécifiée'}`);
+            console.log(`🛑 [PDCA: Act] Arrêt : ${allMet ? 'Tous les objectifs atteints' : 'Option --stop spécifiée'}`);
+            break;
+        }
+        // Étape Check : Confirmation manuelle si --confirm est activé
+        if (!(await confirmIteration(iteration))) {
+            console.log('🛑 [PDCA: Act] Arrêt par l’utilisateur');
             break;
         }
         iteration++;
     }
 
+    // Étape Act : Génération du rapport final
     await generateFinalReport(analyses, iteration);
-    console.log('✅ Job FrontAgent terminé !');
+    console.log('✅ Job FontAiAgent terminé !');
 })();
