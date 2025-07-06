@@ -310,9 +310,11 @@ Voulez-vous que je l'implémente dans votre projet ?`;
         // Logique simple pour extraire le nom du composant
         const words = request.split(' ');
         for (let i = 0; i < words.length; i++) {
-            if (words[i].toLowerCase().includes('composant') || words[i].toLowerCase().includes('component')) {
-                if (i + 1 < words.length) {
-                    return words[i + 1].charAt(0).toUpperCase() + words[i + 1].slice(1);
+            const word = words[i];
+            if (word && (word.toLowerCase().includes('composant') || word.toLowerCase().includes('component'))) {
+                if (i + 1 < words.length && words[i + 1]) {
+                    const nextWord = words[i + 1]!;
+                    return nextWord.charAt(0).toUpperCase() + nextWord.slice(1);
                 }
             }
         }
@@ -323,9 +325,11 @@ Voulez-vous que je l'implémente dans votre projet ?`;
         // Logique simple pour extraire le nom de la page
         const words = request.split(' ');
         for (let i = 0; i < words.length; i++) {
-            if (words[i].toLowerCase().includes('page')) {
-                if (i + 1 < words.length) {
-                    return words[i + 1].charAt(0).toUpperCase() + words[i + 1].slice(1);
+            const word = words[i];
+            if (word && word.toLowerCase().includes('page')) {
+                if (i + 1 < words.length && words[i + 1]) {
+                    const nextWord = words[i + 1]!;
+                    return nextWord.charAt(0).toUpperCase() + nextWord.slice(1);
                 }
             }
         }
@@ -515,7 +519,7 @@ useHead({
         }
     }
 
-    private generateStyleCode(codeRequest: any, context: any): string {
+    private generateStyleCode(_codeRequest: any, _context: any): string {
         return `/* Variables CSS modernes */
 :root {
   /* Couleurs */
@@ -614,7 +618,7 @@ body {
 }`;
     }
 
-    private generateTestCode(codeRequest: any, context: any): string {
+    private generateTestCode(codeRequest: any, _context: any): string {
         const componentName = codeRequest.details.name || 'Component';
         
         return `import { describe, it, expect } from '@jest/globals'

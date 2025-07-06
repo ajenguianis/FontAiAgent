@@ -216,7 +216,7 @@ export class FrontendChatAgent {
         }
     }
 
-    private async handleAnalyzeRequest(message: string): Promise<string> {
+    private async handleAnalyzeRequest(_message: string): Promise<string> {
         // Analyser le projet si pas encore fait
         if (this.context.framework === 'Unknown') {
             await this.analyzeProject();
@@ -235,7 +235,7 @@ ${this.context.recommendations.length > 0 ? `💡 **Recommandations :** ${this.c
 Que souhaitez-vous que j'analyse plus en détail ? (performance, design, accessibilité, code quality, etc.)`;
     }
 
-    private async handleDetectIssuesRequest(message: string): Promise<string> {
+    private async handleDetectIssuesRequest(_message: string): Promise<string> {
         // Analyser le projet pour détecter les problèmes
         await this.analyzeProject();
         await this.detectIssues();
@@ -259,7 +259,7 @@ ${mediumIssues.length > 0 ? `🟡 **Moyens (${mediumIssues.length}) :**\n${mediu
 Voulez-vous que je propose des corrections automatiques pour ces problèmes ?`;
     }
 
-    private async handleImproveRequest(message: string): Promise<string> {
+    private async handleImproveRequest(_message: string): Promise<string> {
         await this.analyzeProject();
         await this.generateRecommendations();
 
@@ -274,24 +274,24 @@ ${mediumPriorityRecs.length > 0 ? `⚡ **Priorité Moyenne (${mediumPriorityRecs
 Voulez-vous que j'implémente une de ces améliorations ? Dites-moi laquelle vous intéresse le plus !`;
     }
 
-    private async handleCreateRequest(message: string): Promise<string> {
+    private async handleCreateRequest(_message: string): Promise<string> {
         // Analyser ce que l'utilisateur veut créer
-        const lowerMessage = message.toLowerCase();
+        const lowerMessage = _message.toLowerCase();
         
         if (lowerMessage.includes('composant') || lowerMessage.includes('component')) {
-            return this.handleComponentCreation(message);
+            return this.handleComponentCreation(_message);
         }
         
         if (lowerMessage.includes('page') || lowerMessage.includes('route')) {
-            return this.handlePageCreation(message);
+            return this.handlePageCreation(_message);
         }
         
         if (lowerMessage.includes('style') || lowerMessage.includes('css') || lowerMessage.includes('scss')) {
-            return this.handleStyleCreation(message);
+            return this.handleStyleCreation(_message);
         }
         
         if (lowerMessage.includes('test') || lowerMessage.includes('spec')) {
-            return this.handleTestCreation(message);
+            return this.handleTestCreation(_message);
         }
         
         return `🤔 **Création**
@@ -306,7 +306,7 @@ Que souhaitez-vous créer exactement ? Je peux vous aider à créer :
 Décrivez-moi ce que vous voulez créer et je vous guiderai !`;
     }
 
-    private async handleCleanupRequest(message: string): Promise<string> {
+    private async handleCleanupRequest(_message: string): Promise<string> {
         const unusedFiles = await this.findUnusedFiles();
         
         if (unusedFiles.length === 0) {
@@ -331,7 +331,7 @@ Voulez-vous que je :
 Que préférez-vous ?`;
     }
 
-    private async handleDocumentRequest(message: string): Promise<string> {
+    private async handleDocumentRequest(_message: string): Promise<string> {
         return `📚 **Documentation**
 
 Je peux vous aider à :
@@ -344,7 +344,7 @@ Je peux vous aider à :
 Quel type de documentation souhaitez-vous ?`;
     }
 
-    private handleGeneralHelp(message: string): string {
+    private handleGeneralHelp(_message: string): string {
         return `🎨 **Expert Frontend Agent - Aide**
 
 Je suis votre assistant IA spécialisé en développement frontend. Voici ce que je peux faire :
@@ -542,7 +542,7 @@ const doubleCount = computed(() => count.value * 2)
         return parts.length > 0 ? parts.join(', ') : 'Structure non standard';
     }
 
-    private handleComponentCreation(message: string): string {
+    private handleComponentCreation(_message: string): string {
         return `🎨 **Création de Composant**
 
 Je vais vous aider à créer un composant ${this.context.framework}.
@@ -557,7 +557,7 @@ Pour bien vous guider, j'ai besoin de quelques informations :
 Pouvez-vous me décrire le composant que vous voulez créer ?`;
     }
 
-    private handlePageCreation(message: string): string {
+    private handlePageCreation(_message: string): string {
         return `📄 **Création de Page**
 
 Je vais vous aider à créer une page pour ${this.context.framework}.
@@ -571,7 +571,7 @@ Dites-moi :
 Que souhaitez-vous créer ?`;
     }
 
-    private handleStyleCreation(message: string): string {
+    private handleStyleCreation(_message: string): string {
         return `🎨 **Création de Styles**
 
 Je vais vous aider à créer des styles pour ${this.context.framework}.
@@ -585,7 +585,7 @@ Options disponibles :
 Quel type de style préférez-vous ?`;
     }
 
-    private handleTestCreation(message: string): string {
+    private handleTestCreation(_message: string): string {
         return `🧪 **Création de Tests**
 
 Je vais vous aider à créer des tests pour ${this.context.framework}.
@@ -639,14 +639,23 @@ Voulez-vous que je procède à l'implémentation ? (oui/non)`;
             backup: true
         });
 
-        if (recommendation.files) {
-            steps.push({
+        if (recommendation.files && recommendation.files[0]) {
+            const step: ActionStep = {
                 id: uuidv4(),
                 description: `Modifier ${recommendation.files.join(', ')}`,
                 action: 'modify',
-                files: recommendation.files,
-                code: recommendation.code
-            });
+                file: recommendation.files[0]
+            };
+            if (recommendation.code) step.code = recommendation.code;
+            steps.push(step);
+        } else {
+            const step: ActionStep = {
+                id: uuidv4(),
+                description: 'Modifier les fichiers recommandés',
+                action: 'modify'
+            };
+            if (recommendation.code) step.code = recommendation.code;
+            steps.push(step);
         }
 
         steps.push({

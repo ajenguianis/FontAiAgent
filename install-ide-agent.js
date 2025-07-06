@@ -33,7 +33,12 @@ const config = {
                         focus: false,
                         panel: 'shared'
                     },
-                    problemMatcher: []
+                    problemMatcher: [],
+                    options: {
+                        shell: {
+                            executable: 'bash'
+                        }
+                    }
                 },
                 {
                     label: 'Frontend Expert: Chat',
@@ -47,7 +52,12 @@ const config = {
                         focus: false,
                         panel: 'shared'
                     },
-                    problemMatcher: []
+                    problemMatcher: [],
+                    options: {
+                        shell: {
+                            executable: 'bash'
+                        }
+                    }
                 }
             ]
         },
@@ -204,13 +214,19 @@ async function createIDEConfig(projectRoot) {
     const vscodeDir = path.join(projectRoot, '.vscode');
     await fs.ensureDir(vscodeDir);
     
-    // Créer tasks.json
+    // Créer tasks.json avec correction WSL
     const tasksPath = path.join(vscodeDir, 'tasks.json');
+    const tasksConfig = createWSLCompatibleTasks(projectRoot);
+    
     if (!await fs.pathExists(tasksPath)) {
-        await fs.writeJson(tasksPath, config.ideConfig['tasks.json'], { spaces: 2 });
-        console.log('✅ Créé: .vscode/tasks.json');
+        await fs.writeJson(tasksPath, tasksConfig, { spaces: 2 });
+        console.log('✅ Créé: .vscode/tasks.json (avec support WSL)');
     } else {
-        console.log('ℹ️  .vscode/tasks.json existe déjà');
+        // Mettre à jour les tâches existantes
+        const existingTasks = await fs.readJson(tasksPath);
+        const updatedTasks = updateExistingTasks(existingTasks, tasksConfig);
+        await fs.writeJson(tasksPath, updatedTasks, { spaces: 2 });
+        console.log('✅ Mis à jour: .vscode/tasks.json (avec support WSL)');
     }
     
     // Créer settings.json
@@ -223,21 +239,133 @@ async function createIDEConfig(projectRoot) {
     }
 }
 
+// Fonction pour créer des tâches compatibles WSL
+function createWSLCompatibleTasks(projectRoot) {
+    const isWSL = process.platform === 'linux' && projectRoot.includes('wsl.localhost');
+    
+    if (isWSL) {
+        // Configuration pour WSL avec wrapper bash
+        return {
+            version: '2.0.0',
+            tasks: [
+                {
+                    label: 'Frontend Expert: Analyser',
+                    type: 'shell',
+                    command: 'bash',
+                    args: ['${workspaceFolder}/.vscode/frontend-expert-agent/run-agent.sh', 'analyze'],
+                    group: 'build',
+                    presentation: {
+                        echo: true,
+                        reveal: 'always',
+                        focus: false,
+                        panel: 'shared'
+                    },
+                    problemMatcher: []
+                },
+                {
+                    label: 'Frontend Expert: Chat',
+                    type: 'shell',
+                    command: 'bash',
+                    args: ['${workspaceFolder}/.vscode/frontend-expert-agent/run-agent.sh', 'chat'],
+                    group: 'build',
+                    presentation: {
+                        echo: true,
+                        reveal: 'always',
+                        focus: false,
+                        panel: 'shared'
+                    },
+                    problemMatcher: []
+                }
+            ]
+        };
+    } else {
+        // Configuration standard avec option shell bash
+        return {
+            version: '2.0.0',
+            tasks: [
+                {
+                    label: 'Frontend Expert: Analyser',
+                    type: 'shell',
+                    command: 'node',
+                    args: ['${workspaceFolder}/.vscode/frontend-expert-agent/src/agent/ide-integration.js', 'analyze'],
+                    group: 'build',
+                    presentation: {
+                        echo: true,
+                        reveal: 'always',
+                        focus: false,
+                        panel: 'shared'
+                    },
+                    problemMatcher: [],
+                    options: {
+                        shell: {
+                            executable: 'bash'
+                        }
+                    }
+                },
+                {
+                    label: 'Frontend Expert: Chat',
+                    type: 'shell',
+                    command: 'node',
+                    args: ['${workspaceFolder}/.vscode/frontend-expert-agent/src/agent/ide-integration.js', 'chat'],
+                    group: 'build',
+                    presentation: {
+                        echo: true,
+                        reveal: 'always',
+                        focus: false,
+                        panel: 'shared'
+                    },
+                    problemMatcher: [],
+                    options: {
+                        shell: {
+                            executable: 'bash'
+                        }
+                    }
+                }
+            ]
+        };
+    }
+}
+
+// Fonction pour mettre à jour les tâches existantes
+function updateExistingTasks(existingTasks, newTasksConfig) {
+    if (!existingTasks.tasks) {
+        return newTasksConfig;
+    }
+    
+    // Supprimer les anciennes tâches Frontend Expert
+    existingTasks.tasks = existingTasks.tasks.filter(task => 
+        !task.label || !task.label.includes('Frontend Expert')
+    );
+    
+    // Ajouter les nouvelles tâches
+    existingTasks.tasks.push(...newTasksConfig.tasks);
+    
+    return existingTasks;
+}
+
 async function installDependencies(targetPath) {
     const packageJsonPath = path.join(targetPath, 'package.json');
     
     if (await fs.pathExists(packageJsonPath)) {
         console.log('📦 Installation des dépendances...');
-        
         const { execSync } = require('child_process');
         try {
-            execSync('npm install', { 
-                cwd: targetPath, 
-                stdio: 'inherit' 
-            });
+            // Si le chemin est un UNC WSL, convertir en chemin Linux et utiliser wsl
+            if (targetPath.startsWith('\\wsl.localhost')) {
+                // Extraire le chemin Linux avec wslpath
+                const linuxPath = execSync(`wsl wslpath "${targetPath}"`, { encoding: 'utf8' }).trim();
+                execSync(`wsl bash -c 'cd "${linuxPath}" && npm install'`, { stdio: 'inherit' });
+            } else {
+                // Sinon, comportement standard
+                execSync('npm install', { 
+                    cwd: targetPath, 
+                    stdio: 'inherit' 
+                });
+            }
             console.log('✅ Dépendances installées');
         } catch (error) {
             console.log('⚠️  Erreur lors de l\'installation des dépendances, mais l\'agent peut fonctionner');
+            console.log('💡 Vous pouvez installer manuellement : cd .vscode/frontend-expert-agent && npm install');
         }
     }
 }
@@ -271,6 +399,41 @@ if (require.main === module) {
     
     await fs.writeFile(ideEntryPath, ideEntryContent);
     console.log('✅ Créé: Point d\'entrée IDE');
+    
+    // Créer le wrapper bash pour WSL
+    await createWSLWrapper(targetPath);
+}
+
+// Fonction pour créer le wrapper bash WSL
+async function createWSLWrapper(targetPath) {
+    const wrapperPath = path.join(targetPath, 'run-agent.sh');
+    
+    const wrapperContent = `#!/bin/bash
+
+# Wrapper script pour l'Expert Frontend Agent
+# Résout les problèmes de chemins WSL
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="$(dirname "$(dirname "$(dirname "$SCRIPT_DIR")")")"
+
+# Convertir le chemin Windows en chemin Linux si nécessaire
+if [[ "$PROJECT_DIR" == *"wsl.localhost"* ]]; then
+    PROJECT_DIR=$(wslpath "$PROJECT_DIR")
+fi
+
+cd "$PROJECT_DIR"
+
+# Exécuter l'agent avec les arguments
+node "$SCRIPT_DIR/src/agent/ide-integration.js" "$@"
+`;
+    
+    try {
+        await fs.writeFile(wrapperPath, wrapperContent);
+        await fs.chmod(wrapperPath, '755'); // Rendre exécutable
+        console.log('✅ Créé: Wrapper bash WSL (run-agent.sh)');
+    } catch (error) {
+        console.log('⚠️  Erreur lors de la création du wrapper bash, mais l\'agent peut fonctionner');
+    }
 }
 
 // Fonction pour créer un agent de chat personnalisé
