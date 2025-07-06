@@ -1,0 +1,46 @@
+{
+    "javascript": {
+      "variableDeclaration": ["const", "let"],
+      "indentation": "2 spaces",
+      "namingConvention": "camelCase",
+      "maxLineLength": 100,
+      "frameworks": ["React", "Vue", "Svelte"]
+    },
+    "css": {
+      "useVariables": true,
+      "variablePrefix": "--",
+      "namingConvention": "kebab-case",
+      "responsiveApproach": "mobile-first",
+      "preferredUnits": ["rem", "em", "%", "vw", "vh"]
+    },
+    "html": {
+      "semanticElements": ["header", "nav", "main", "footer", "article", "section", "aside"],
+      "maxNestingDepth": 5,
+      "useAria": true
+    },
+    "recommendedTools": {
+      "bundler": ["Vite", "Webpack"],
+      "linter": ["ESLint", "Stylelint"],
+      "formatter": ["Prettier"]
+    },
+    "code_quality": {
+      "eslint": { "enabled": true, "rules": ["no-var", "prefer-const"] },
+      "prettier": { "enabled": true, "semi": true, "singleQuote": true }
+    },
+    "seo": {
+      "meta": ["title", "description"],
+      "structuredData": true,
+      "sitemap": true
+    },
+    "security": {
+      "headers": ["Content-Security-Policy", "X-Frame-Options"],
+      "xss": true,
+      "csrf": true
+    },
+    "design_trends": {
+      "glassmorphism": true,
+      "micro_interactions": true,
+      "dark_mode": true
+    }
+  }
+  

@@ -1,186 +1,384 @@
-# FontAiAgent
+# 🎨 Expert Frontend Agent v3.0.0
 
-**FontAiAgent** est un outil d’optimisation frontend alimenté par l’IA, conçu pour améliorer l’UX/UI, la performance et l’accessibilité des projets web. Spécialisé dans **Symfony**, **JavaScript/TypeScript** (React, Vue) et les tendances design 2025 (glassmorphism, micro-interactions, mode sombre), il s’intègre directement dans votre IDE pour optimiser vos interfaces de manière moderne et intuitive.
+**Votre assistant IA pour créer des expériences frontend exceptionnelles**
 
-[![CI/CD](https://github.com/ajenguianis/FontAiAgent/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/ajenguianis/FontAiAgent/actions)
+Spécialisé Vue.js/Nuxt, Angular, React/Next avec expertise design de première classe.
 
-## 🚀 Fonctionnalités
+## ✨ Caractéristiques
 
-- **Analyse UX/UI** : Évalue l’accessibilité (WCAG 2.1 AA, score ≥ 90/100), la sémantique HTML et les performances (FCP < 1.8s, LCP < 2.5s).
-- **Optimisation Automatisée** : Corrige les images sans `alt`, modernise le code JS (`const`/`let`), ajoute des meta viewport, et plus.
-- **Sauvegarde Automatique** : Sauvegarde les fichiers modifiés dans `.vscode/.agent_backups/`.
-- **Interaction Utilisateur** : Pose des questions pour clarifier vos priorités (accessibilité, performance, etc.) et collecte votre feedback après chaque itération.
-- **Support Multi-Technologies** : Compatible avec Symfony (Twig, SCSS), React, Vue, et autres frameworks JS/TS.
-- **Tendances 2025** : Intègre glassmorphism, micro-interactions et mode sombre selon vos préférences.
-- **Intégration IDE** : Tâches prêtes pour VS Code, Cursor, VoidIDE via `.vscode/tasks.json`.
-- **CI/CD** : Tests unitaires et linting via GitHub Actions.
-- **Modularité** : Code TypeScript modulaire, règles personnalisables et prompts pour IA.
+### 🎯 **Expertise Framework**
+- **Vue.js/Nuxt** - Composition API, composables, optimisations
+- **Angular** - Composants standalone, Signals, Material Design
+- **React/Next** - Hooks personnalisés, SSR, optimisations
 
-## 📦 Installation dans Votre Projet
+### 🎨 **Expertise Design de Première Classe**
+- **HTML/Semantic** - Structure sémantique optimale
+- **SCSS/CSS** - Systèmes de design tokens, variables CSS
+- **JavaScript/TypeScript** - Code moderne et performant
+- **Responsive Design** - Mobile-first, micro-interactions
+- **Accessibilité** - WCAG, navigation clavier, ARIA
 
-**FontAiAgent** s’utilise comme un outil utilisateur, intégré dans votre IDE via le dossier `.vscode/`. Suivez ces étapes pour l’installer dans votre projet existant :
+### 🤖 **Intelligence Artificielle**
+- **Questions guidées** - Compréhension de vos objectifs
+- **Analyse contextuelle** - Détection automatique + questions ciblées
+- **Recommandations personnalisées** - Basées sur votre contexte
+- **Code d'exemple** - Implémentations concrètes
 
-1. **Cloner le dépôt** :
-   ```bash
-   git clone https://github.com/ajenguianis/FontAiAgent.git
-   ```
+### 💬 **Intégration IDE Native**
+- **Chat conversationnel** - Interface naturelle dans votre IDE
+- **Analyse automatique** - Détection des problèmes en temps réel
+- **Génération de code** - Création automatique de composants
+- **Suggestions intelligentes** - Recommandations contextuelles
 
-2. **Copier FontAiAgent dans votre projet** :
-   - Exécutez le script d’installation pour copier les fichiers dans `.vscode/font-ai-agent/` :
-     ```bash
-     bash FontAiAgent/install-font-ai-agent.sh FontAiAgent /chemin/vers/votre-projet
-     ```
-   - Cela crée `.vscode/font-ai-agent/` avec tous les scripts, configurations et dépendances nécessaires.
+## 🚀 Installation
 
-3. **Prérequis** :
-   - Assurez-vous que Node.js, `ts-node` et `jq` sont installés globalement :
-     ```bash
-     npm install -g ts-node
-     sudo apt-get install jq  # Ubuntu/Debian
-     brew install jq         # macOS
-     ```
+### 🎯 **Installation dans votre projet (Recommandé)**
 
-4. **Configurer `.vscode/tasks.json`** :
-   - Copiez le fichier `.vscode/tasks.json` depuis le dépôt **FontAiAgent** :
-     ```bash
-     cp FontAiAgent/.vscode/tasks.json /chemin/vers/votre-projet/.vscode/
-     ```
-
-## 🛠️ Utilisation dans Votre IDE
-
-**FontAiAgent** suit une méthodologie itérative PDCA (Plan-Do-Check-Act) pour analyser, optimiser, vérifier et finaliser les améliorations de votre projet :
-- **Plan** : Analyse initiale, questions pour clarifier vos priorités, et définition des objectifs SMART.
-- **Do** : Application des corrections automatiques avec sauvegarde dans `.vscode/.agent_backups/`.
-- **Check** : Vérification des progrès, collecte de feedback, et confirmation manuelle (`--confirm`).
-- **Act** : Génération d’un rapport final dans `.vscode/final-report.md`.
-
-### Optimiser un Projet Existant dans Votre IDE
-
-1. **Ouvrir votre projet** :
-   - Ouvrez le dossier de votre projet (ex. `/mon-projet-symfony/`) dans VS Code, Cursor ou VoidIDE.
-
-2. **Installer FontAiAgent** :
-   - Exécutez le script d’installation (voir **Installation** ci-dessus) pour copier **FontAiAgent** dans `.vscode/font-ai-agent/`.
-
-3. **Lancer l’optimisation** :
-   - Ouvrez la palette de commandes (`Ctrl+Shift+P` ou `Cmd+Shift+P`).
-   - Tapez `Tasks: Run Task` et sélectionnez `FontAiAgent: Optimize Project`.
-   - Répondez aux questions interactives pour définir vos priorités (ex. accessibilité, fichiers spécifiques, tendances de design).
-   - Cela exécute :
-     ```bash
-     ts-node .vscode/font-ai-agent/scripts/front-agent-job.ts --project .
-     ```
-   - Pour une optimisation interactive (confirmation et feedback après chaque itération) :
-     - Sélectionnez `FontAiAgent: Optimize Project (Interactive)`.
-
-4. **Vérifier les résultats** :
-   - Les rapports sont générés dans `.vscode/iteration-N/` (ex. `.vscode/iteration-1/analysis-data.json`, `.vscode/iteration-1/ux-report.md`).
-   - Consultez `.vscode/final-report.md` pour un résumé des améliorations et votre feedback.
-   - Les sauvegardes sont stockées dans `.vscode/.agent_backups/`.
-
-5. **Appliquer les recommandations manuelles** (si nécessaire) :
-   - Ouvrez `.vscode/iteration-N/ux-report.md` pour les recommandations.
-   - Utilisez les prompts dans `.vscode/font-ai-agent/prompts/` avec Trae, Cursor ou VS Code.
-
-**Exemple : Optimiser un projet Symfony** :
-- Projet dans `/mon-projet-symfony/`.
-- Après installation, ouvrez le projet dans VS Code.
-- Lancez `FontAiAgent: Optimize Project` via la palette de commandes.
-- Répondez aux questions (ex. "Prioriser l’accessibilité", "Fichiers: templates/home.twig", "Tendances: dark mode").
-- Fournissez un feedback après chaque itération (ex. "Focusing more on performance next time").
-- Vérifiez `.vscode/final-report.md` pour les améliorations.
-
-### Autres Cas d’Utilisation
-
-#### Analyser une URL
+#### **Option 1: Installation directe avec chemin**
 ```bash
-ts-node .vscode/font-ai-agent/scripts/front-agent-job.ts --url https://example.com --screenshot --performance
+# Cloner le repository
+git clone https://github.com/ajenguianis/FontAiAgent.git
+cd FontAiAgent
+
+# Installer les dépendances
+npm install
+
+# Installer dans votre projet spécifique
+node install-ide-agent.js /chemin/vers/votre/projet
 ```
 
-#### Analyser un fichier HTML
+#### **Option 2: Installation depuis n'importe où**
 ```bash
-ts-node .vscode/font-ai-agent/scripts/front-agent-job.ts --html /chemin/vers/fichier.html --deep
+# Utiliser le script global d'installation
+node install-global.js /chemin/vers/votre/projet
+
+# Ou pour le projet courant
+node install-global.js .
 ```
 
-#### Auditer un projet Symfony
+#### **Option 3: Installation automatique**
 ```bash
-ts-node .vscode/font-ai-agent/scripts/audit-symfony.ts --project .
+# Le script détectera automatiquement le projet courant
+node install-ide-agent.js
 ```
 
-#### Auditer un projet JS/TS
+L'agent sera installé dans `.vscode/frontend-expert-agent/` et configuré pour fonctionner avec votre IDE.
+
+### 📝 **Exemples d'installation**
+
 ```bash
-ts-node .vscode/font-ai-agent/scripts/audit-js.ts --project .
+# Installation dans un projet Vue.js
+node install-ide-agent.js /home/user/projects/mon-app-vue
+
+# Installation dans un projet React
+node install-global.js /home/user/projects/mon-app-react
+
+# Installation dans le projet courant
+node install-ide-agent.js .
+
+# Installation depuis n'importe où
+cd /tmp
+node install-global.js /home/user/projects/mon-projet
 ```
 
-#### Restaurer une sauvegarde
+### 🌍 **Installation Globale**
 ```bash
-bash .vscode/font-ai-agent/scripts/rollback.sh 20250629-1304
+npm install -g expert-frontend-agent
 ```
 
-#### Supprimer les sauvegardes
+## 📋 Utilisation
+
+### 💬 **Mode Chat IDE (Recommandé)**
+
+Une fois installé, l'agent est disponible directement dans le chat de votre IDE (VoidIDE, Cursor, Trae, VS Code) :
+
+#### **Commandes de base :**
+```
+🔍 "Analyse mon projet"
+🚨 "Détecte les problèmes"
+🚀 "Améliore le code"
+🎨 "Crée un composant"
+🧹 "Nettoie les fichiers"
+📚 "Mets à jour la documentation"
+```
+
+#### **Exemples d'interaction :**
+```
+Vous: "Analyse mon projet Vue.js"
+Agent: 🔍 **Analyse du Projet**
+      🎯 Framework détecté : Vue.js 3.3.4
+      📁 Structure : Composants, Pages, Styles
+      🚀 Fonctionnalités : TypeScript, ESLint, Vite
+      ⚠️ Problèmes détectés : 3
+      💡 Recommandations : 5 disponibles
+
+Vous: "Détecte les problèmes d'accessibilité"
+Agent: 🚨 **Problèmes Détectés**
+      🔴 Critiques (1) :
+      - Images sans attribut alt dans Header.vue
+      🟠 Élevés (2) :
+      - Navigation sans focus visible
+      - Contraste insuffisant sur les boutons
+
+Vous: "Crée un composant de navigation"
+Agent: 🎨 **Création de Composant**
+      Je vais vous aider à créer un composant Navigation.
+      Pour bien vous guider, j'ai besoin de quelques informations :
+      1. Nom du composant (ex: NavigationBar, MainNav)
+      2. Type de composant (UI, Layout, etc.)
+      3. Fonctionnalités (props, events, slots)
+      4. Style (CSS, SCSS, CSS-in-JS)
+```
+
+### 🎯 **Mode Analyse Classique**
 ```bash
-bash .vscode/font-ai-agent/scripts/clear-backups.sh 20250629-1304
+npm start                    # Analyse complète du projet actuel
+npm start [chemin]           # Analyser un projet spécifique
+```
+
+### 🔍 **Mode Audit**
+```bash
+npm start . audit            # Audit rapide du projet
+```
+
+### 🚀 **Mode Amélioration**
+```bash
+npm start . enhance          # Mode amélioration avec focus sur le code
+```
+
+## 💡 Expérience Utilisateur
+
+### 🤖 **Agent Conversationnel Intelligent**
+
+L'agent analyse vos messages et pose des questions pour mieux comprendre vos besoins :
+
+#### **Analyse d'intention automatique :**
+- **"Analyser"** → Analyse complète du projet
+- **"Détecter"** → Recherche de problèmes et erreurs
+- **"Améliorer"** → Recommandations d'optimisation
+- **"Créer"** → Génération de code et composants
+- **"Nettoyer"** → Suppression de fichiers inutiles
+- **"Documenter"** → Mise à jour de la documentation
+
+#### **Questions contextuelles :**
+- **Objectif principal** : Performance, Design, Accessibilité, SEO, Qualité du code
+- **Délai** : Immédiat, Court terme, Long terme
+- **Niveau d'expertise** : Débutant, Intermédiaire, Expert
+- **Style de design** : Minimal, Moderne, Créatif, Corporate, Personnalisé
+
+### 🎨 **Génération de Code Intelligente**
+
+L'agent peut créer automatiquement :
+
+#### **Composants Framework-Spécifiques :**
+```vue
+<!-- Vue.js/Nuxt -->
+<template>
+  <nav class="navigation">
+    <ul>
+      <li v-for="item in menuItems" :key="item.id">
+        <a :href="item.href">{{ item.label }}</a>
+      </li>
+    </ul>
+  </nav>
+</template>
+
+<script setup lang="ts">
+interface MenuItem {
+  id: string
+  label: string
+  href: string
+}
+
+const menuItems = ref<MenuItem[]>([
+  { id: 'home', label: 'Accueil', href: '/' },
+  { id: 'about', label: 'À propos', href: '/about' }
+])
+</script>
+```
+
+#### **Styles Modernes :**
+```scss
+.navigation {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-4);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  
+  ul {
+    display: flex;
+    gap: var(--spacing-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}
+```
+
+## 📊 Exemple de Sortie
+
+```
+🎨 Expert Frontend Agent v3.0.0
+Votre assistant IA pour créer des expériences frontend exceptionnelles
+Spécialisé Vue.js/Nuxt, Angular, React/Next avec expertise design de première classe
+
+🔄 Analyse du contexte du projet...
+🎯 [NUXT.JS] Détecté : Nuxt.js ^3.0.0
+
+Quel système de design utilisez-vous ?
+  1. Aucun
+  2. Material Design
+  3. Ant Design
+  4. Chakra UI
+  5. Tailwind CSS
+  6. Bootstrap
+  7. Custom
+
+Votre choix (numéro) : 5
+
+📊 Analyse terminée ! Voici vos résultats :
+
+🎯 Scores actuels :
+  🟢 performance: 85/100
+  🟢 design: 90/100
+  🟡 accessibility: 75/100
+  🟡 seo: 78/100
+  🟢 codeQuality: 86/100
+
+🚀 Recommandations prioritaires :
+
+  1. Optimiser avec la Composition API
+     📝 Migrer vers la Composition API pour une meilleure réutilisabilité et performance
+     🎯 Impact: high | Effort: medium
+
+  2. Créer un système de design tokens
+     📝 Implémenter un système de design tokens pour la cohérence
+     🎯 Impact: high | Effort: medium
+
+  3. Implémenter un design responsive moderne
+     📝 Créer une expérience utilisateur fluide sur tous les appareils
+     🎯 Impact: high | Effort: medium
+```
+
+## 📁 Structure du Projet
+
+```
+src/
+├── agent/
+│   ├── index.ts              # Point d'entrée principal
+│   ├── front-agent.ts        # Agent expert intelligent
+│   ├── chat-agent.ts         # Agent conversationnel
+│   └── ide-integration.ts    # Intégration IDE
+├── config/
+│   ├── frameworks.json       # Configuration des frameworks
+│   ├── standards.json        # Standards de qualité
+│   └── design-preferences.json # Préférences design
+├── prompts/
+│   └── framework-prompts.json # Prompts spécialisés
+├── rules/
+│   └── framework-rules.json  # Règles par framework
+└── tests/
+    ├── front-agent.test.ts   # Tests de l'agent principal
+    └── e2e/
+        └── agent-e2e.test.ts # Tests end-to-end
+```
+
+## 🎨 Expertise Design
+
+### **HTML/Semantic**
+- Structure sémantique optimale
+- Accessibilité intégrée
+- SEO-friendly markup
+
+### **SCSS/CSS**
+- Systèmes de design tokens
+- Variables CSS modernes
+- Architecture modulaire
+- Responsive design avancé
+
+### **JavaScript/TypeScript**
+- Code moderne (ES6+)
+- Patterns optimisés
+- Performance-first
+- Type safety
+
+### **Micro-interactions**
+- Animations subtiles
+- États de chargement
+- Feedback utilisateur
+- Transitions fluides
+
+## 🔧 Configuration IDE
+
+### VS Code / Cursor / VoidIDE
+L'agent s'installe automatiquement dans `.vscode/` avec :
+
+- **tasks.json** - Commandes rapides
+- **settings.json** - Configuration automatique
+- **Intégration chat** - Interface conversationnelle
+
+### Configuration automatique
+```json
+{
+  "frontend-expert-agent.enabled": true,
+  "frontend-expert-agent.autoAnalyze": true,
+  "frontend-expert-agent.autoBackup": true,
+  "frontend-expert-agent.suggestionsEnabled": true,
+  "frontend-expert-agent.codeGenerationEnabled": true
+}
 ```
 
 ## 🧪 Tests
 
-Pour valider l’installation, exécutez les tests depuis `.vscode/font-ai-agent/` :
 ```bash
-cd .vscode/font-ai-agent
-npm test
+npm test              # Tous les tests
+npm run test:unit     # Tests unitaires
+npm run test:e2e      # Tests end-to-end
 ```
 
-Linting du code :
+## 📝 Scripts Disponibles
+
 ```bash
-npm run lint
+npm start             # Démarrage de l'agent
+npm run analyze       # Analyse complète
+npm run audit         # Audit rapide
+npm run enhance       # Mode amélioration
+npm run build         # Compilation TypeScript
+npm run dev           # Mode développement
+npm run lint          # Vérification du code
+npm run lint:fix      # Correction automatique
 ```
 
-## 🖥️ Intégration avec les IDEs
+## 🤝 Contribution
 
-- **VS Code / Cursor / VoidIDE** : Utilisez `.vscode/tasks.json` pour exécuter les tâches via `Tasks: Run Task`.
-- **Trae** : Chargez les fichiers `.vscode/font-ai-agent/rules/*.rules` dans Agents → New Agent.
+1. Fork le projet
+2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
+3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
 
-## 📂 Structure de FontAiAgent dans Votre Projet
+## 📄 Licence
 
-Après installation, votre projet contiendra :
-```
-/chemin/vers/votre-projet/
-├── .vscode/
-│   ├── font-ai-agent/
-│   │   ├── scripts/           # Scripts pour analyse et optimisation
-│   │   ├── config/            # Préférences de design et heuristiques UX
-│   │   ├── rules/             # Règles pour Trae
-│   │   ├── prompts/           # Prompts pour optimisations manuelles
-│   │   ├── tests/             # Tests unitaires
-│   │   ├── package.json       # Dépendances de l’agent
-│   │   ├── node_modules/      # Dépendances installées
-│   ├── .agent_backups/        # Sauvegardes automatiques
-│   ├── iteration-N/           # Rapports d’itération
-│   ├── final-report.md        # Rapport final
-│   ├── tasks.json             # Tâches pour l’IDE
-├── .gitignore                 # Ajoutez .vscode/font-ai-agent/node_modules/
-```
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
-## 🤝 Contribuer
+## 🆘 Support
 
-1. Forkez le dépôt et créez une branche :
-   ```bash
-   git checkout -b feature/votre-fonctionnalité
-   ```
-2. Suivez le guide de style dans `.vscode/font-ai-agent/config/style-guide.json`.
-3. Ajoutez des tests dans `.vscode/font-ai-agent/tests/`.
-4. Soumettez une pull request en utilisant le modèle dans `.github/PULL_REQUEST_TEMPLATE.md`.
-
-Consultez `.github/CONTRIBUTING.md` pour plus de détails.
-
-## 📜 Licence
-
-[MIT License](LICENSE)
-
-## 📬 Contact
-
-Pour questions ou suggestions, ouvrez une issue sur [GitHub](https://github.com/ajenguianis/FontAiAgent) ou contactez [votre-email@example.com].
+- 📧 Email: support@expert-frontend-agent.com
+- 🐛 Issues: [GitHub Issues](https://github.com/ajenguianis/FontAiAgent/issues)
+- 📖 Documentation: [Wiki](https://github.com/ajenguianis/FontAiAgent/wiki)
 
 ---
 
-**FontAiAgent** : Votre partenaire pour des interfaces modernes, accessibles et performantes. Propulsé par une expertise senior et une créativité sans limite.
+**🎨 Expert Frontend Agent v3.0.0** - Créez des expériences frontend exceptionnelles avec l'aide de l'IA !
