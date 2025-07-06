@@ -2,117 +2,212 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run FontAiAgent Job",
+            "label": "FontAiAgent: Optimize Project",
             "type": "shell",
             "command": "ts-node",
             "args": [
-                "src/scripts/front-agent-job.ts",
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
                 "--project",
-                "${input:projectPath}"
+                "${input:projectPath}",
+                "--auto-fix",
+                "--performance",
+                "--accessibility",
+                "--seo",
+                "--security",
+                "--trend-analysis",
+                "--output",
+                "${input:outputDir}",
+                "--expertise-level",
+                "${input:expertiseLevel}",
+                "--target-audience",
+                "${input:targetAudience}"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "Exécuter le workflow itératif d’optimisation frontend"
+            "detail": "Exécuter l'optimisation frontend complète avec corrections automatiques (performance, accessibilité, SEO, sécurité, tendances 2025)"
         },
         {
-            "label": "Run UX Analysis",
-            "type": "shell",
-            "command": "node",
-            "args": [
-                "src/scripts/ux-analyzer.js",
-                "--project",
-                "${input:projectPath}"
-            ],
-            "group": "build",
-            "detail": "Analyser l’UX/UI du projet"
-        },
-        {
-            "label": "Run Symfony Audit",
+            "label": "FontAiAgent: Run Lighthouse CI",
             "type": "shell",
             "command": "ts-node",
             "args": [
-                "src/scripts/audit-symfony.ts",
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
                 "--project",
-                "${input:projectPath}"
+                "${input:projectPath}",
+                "--lighthouse-ci",
+                "--output",
+                "${input:outputDir}"
             ],
             "group": "build",
-            "detail": "Auditer un projet Symfony (Twig, SCSS, JS)"
+            "detail": "Exécuter une analyse Lighthouse CI pour valider les métriques performance, SEO et accessibilité"
         },
         {
-            "label": "Run JS/TS Audit",
+            "label": "FontAiAgent: Analyze Performance",
             "type": "shell",
             "command": "ts-node",
             "args": [
-                "src/scripts/audit-js.ts",
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
                 "--project",
-                "${input:projectPath}"
+                "${input:projectPath}",
+                "--performance",
+                "--output",
+                "${input:outputDir}"
             ],
             "group": "build",
-            "detail": "Auditer un projet JavaScript/TypeScript"
+            "detail": "Analyser les performances (Core Web Vitals, optimisations images, cache)"
         },
         {
-            "label": "Track Changes",
+            "label": "FontAiAgent: Analyze Accessibility",
             "type": "shell",
             "command": "ts-node",
             "args": [
-                "src/scripts/track-changes.ts",
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
                 "--project",
-                "${input:projectPath}"
+                "${input:projectPath}",
+                "--accessibility",
+                "--output",
+                "${input:outputDir}"
             ],
             "group": "build",
-            "detail": "Suivre et sauvegarder les fichiers modifiés"
+            "detail": "Auditer l'accessibilité selon les normes WCAG 2.1 AA/AAA avec axe-core"
         },
         {
-            "label": "Rollback Changes",
+            "label": "FontAiAgent: Analyze SEO",
             "type": "shell",
-            "command": "bash",
+            "command": "ts-node",
             "args": [
-                "src/scripts/rollback.sh",
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
+                "--project",
+                "${input:projectPath}",
+                "--seo",
+                "--output",
+                "${input:outputDir}"
+            ],
+            "group": "build",
+            "detail": "Auditer le SEO technique et sémantique (meta tags, structured data)"
+        },
+        {
+            "label": "FontAiAgent: Analyze Security",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
+                "--project",
+                "${input:projectPath}",
+                "--security",
+                "--output",
+                "${input:outputDir}"
+            ],
+            "group": "build",
+            "detail": "Auditer la sécurité frontend (headers, XSS, CSRF, dépendances)"
+        },
+        {
+            "label": "FontAiAgent: Analyze Design Trends",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
+                "--project",
+                "${input:projectPath}",
+                "--trend-analysis",
+                "--output",
+                "${input:outputDir}"
+            ],
+            "group": "build",
+            "detail": "Analyser la conformité aux tendances design 2025 (glassmorphism, micro-interactions)"
+        },
+        {
+            "label": "FontAiAgent: Generate Visual Report",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                ".vscode/font-ai-agent/scripts/front-agent-job.ts",
+                "--project",
+                "${input:projectPath}",
+                "--output",
+                "${input:outputDir}"
+            ],
+            "group": "build",
+            "detail": "Générer un rapport visuel avec graphiques (ex. radar chart)"
+        },
+        {
+            "label": "FontAiAgent: Rollback Changes",
+            "type": "shell",
+            "command": "ts-node",
+            "args": [
+                ".vscode/font-ai-agent/scripts/rollback.ts",
+                "--timestamp",
                 "${input:timestamp}",
+                "--tech",
                 "${input:tech}",
+                "--file",
                 "${input:file}"
             ],
             "group": "build",
-            "detail": "Restaurer les fichiers à partir d’une sauvegarde"
+            "detail": "Restaurer les fichiers à partir d'une sauvegarde spécifique"
         },
         {
-            "label": "Clear Backups",
+            "label": "FontAiAgent: Clear Backups",
             "type": "shell",
-            "command": "bash",
+            "command": "ts-node",
             "args": [
-                "src/scripts/clear-backups.sh",
+                ".vscode/font-ai-agent/scripts/clear-backups.ts",
+                "--timestamp",
                 "${input:timestamp}",
-                "${input:tech}"
+                "--tech",
+                "${input:tech}",
+                "--force"
             ],
             "group": "build",
-            "detail": "Supprimer les sauvegardes"
+            "detail": "Supprimer les sauvegardes par timestamp ou technologie"
         }
     ],
     "inputs": [
         {
             "id": "projectPath",
             "type": "promptString",
-            "description": "Chemin du projet à analyser (ex. /chemin/vers/projet)",
+            "description": "Chemin du projet à analyser (ex. /path/to/project ou . pour le dossier courant)",
             "default": "${workspaceFolder}"
+        },
+        {
+            "id": "outputDir",
+            "type": "promptString",
+            "description": "Dossier de sortie pour les rapports et analyses (ex. ./reports)",
+            "default": "./.vscode"
+        },
+        {
+            "id": "expertiseLevel",
+            "type": "pickString",
+            "description": "Niveau d'expertise pour l'analyse (junior, senior, expert)",
+            "options": ["junior", "senior", "expert"],
+            "default": "expert"
+        },
+        {
+            "id": "targetAudience",
+            "type": "pickString",
+            "description": "Audience cible du projet (b2b, b2c, e-commerce, corporate)",
+            "options": ["b2b", "b2c", "e-commerce", "corporate"],
+            "default": "b2c"
         },
         {
             "id": "timestamp",
             "type": "promptString",
-            "description": "Timestamp de la sauvegarde (ex. 20250629-1304, vide pour tous)",
+            "description": "Timestamp de la sauvegarde à restaurer/supprimer (ex. 20250705-143022, vide pour toutes)",
             "default": ""
         },
         {
             "id": "tech",
-            "type": "promptString",
-            "description": "Technologie à restaurer/supprimer (Twig, CSS, JS, vide pour tous)",
+            "type": "pickString",
+            "description": "Technologie à restaurer/supprimer (Twig, CSS, JS, vide pour toutes)",
+            "options": ["", "Twig", "CSS", "JS"],
             "default": ""
         },
         {
             "id": "file",
             "type": "promptString",
-            "description": "Fichier spécifique à restaurer (ex. templates/base.html.twig, vide pour tous)",
+            "description": "Fichier spécifique à restaurer (optionnel)",
             "default": ""
         }
     ]

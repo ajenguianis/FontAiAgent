@@ -1,0 +1,111 @@
+ 
+    "vue": {
+      "composition-api": {
+        "title": "Migration vers la Composition API",
+        "prompt": "Aide-moi à migrer ce composant Vue.js de l'Options API vers la Composition API. Voici le code actuel:\n\n{code}\n\nGénère une version avec la Composition API qui:\n1. Utilise ref() et reactive() pour l'état\n2. Utilise computed() pour les propriétés calculées\n3. Utilise onMounted(), onUnmounted() pour les lifecycle hooks\n4. Utilise watch() pour les watchers\n5. Suit les meilleures pratiques Vue 3",
+        "examples": [
+          {
+            "before": "export default {\n  data() {\n    return {\n      count: 0\n    }\n  },\n  computed: {\n    doubleCount() {\n      return this.count * 2\n    }\n  },\n  methods: {\n    increment() {\n      this.count++\n    }\n  }\n}",
+            "after": "import { ref, computed } from 'vue'\n\nexport default {\n  setup() {\n    const count = ref(0)\n    const doubleCount = computed(() => count.value * 2)\n    \n    const increment = () => {\n      count.value++\n    }\n    \n    return {\n      count,\n      doubleCount,\n      increment\n    }\n  }\n}"
+          }
+        ]
+      },
+      "pinia": {
+        "title": "Configuration Pinia Store",
+        "prompt": "Crée un store Pinia pour gérer l'état de cette fonctionnalité. Le store doit:\n1. Utiliser defineStore() avec l'ID approprié\n2. Définir l'état avec ref() ou reactive()\n3. Définir les getters avec computed()\n4. Définir les actions pour les mutations\n5. Suivre les conventions Pinia",
+        "examples": [
+          {
+            "template": "import { defineStore } from 'pinia'\nimport { ref, computed } from 'vue'\n\nexport const useUserStore = defineStore('user', () => {\n  // State\n  const user = ref(null)\n  const isAuthenticated = ref(false)\n  \n  // Getters\n  const userFullName = computed(() => {\n    return user.value ? `${user.value.firstName} ${user.value.lastName}` : ''\n  })\n  \n  // Actions\n  const login = async (credentials) => {\n    // Logique de connexion\n  }\n  \n  const logout = () => {\n    user.value = null\n    isAuthenticated.value = false\n  }\n  \n  return {\n    user,\n    isAuthenticated,\n    userFullName,\n    login,\n    logout\n  }\n})"
+          }
+        ]
+      },
+      "vite": {
+        "title": "Configuration Vite pour Vue",
+        "prompt": "Optimise la configuration Vite pour ce projet Vue.js. La config doit:\n1. Inclure les plugins Vue et TypeScript\n2. Configurer les alias de chemins\n3. Optimiser le build pour la production\n4. Configurer le hot reload\n5. Inclure les optimisations de performance",
+        "examples": [
+          {
+            "template": "import { defineConfig } from 'vite'\nimport vue from '@vitejs/plugin-vue'\nimport { resolve } from 'path'\n\nexport default defineConfig({\n  plugins: [vue()],\n  resolve: {\n    alias: {\n      '@': resolve(__dirname, 'src')\n    }\n  },\n  build: {\n    target: 'es2015',\n    rollupOptions: {\n      output: {\n        manualChunks: {\n          vendor: ['vue', 'vue-router'],\n          utils: ['lodash-es']\n        }\n      }\n    }\n  },\n  server: {\n    port: 3000,\n    open: true\n  }\n})"
+          }
+        ]
+      }
+    },
+    "angular": {
+      "standalone": {
+        "title": "Migration vers les Standalone Components",
+        "prompt": "Convertis ce composant Angular en standalone component. Le composant doit:\n1. Utiliser standalone: true\n2. Importer les dépendances nécessaires\n3. Définir les inputs/outputs\n4. Utiliser OnPush change detection si approprié\n5. Suivre les meilleures pratiques Angular 17+",
+        "examples": [
+          {
+            "before": "@Component({\n  selector: 'app-user-card',\n  templateUrl: './user-card.component.html',\n  styleUrls: ['./user-card.component.scss']\n})\nexport class UserCardComponent {\n  @Input() user: User;\n  @Output() userClick = new EventEmitter<User>();\n}",
+            "after": "import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { User } from '../models/user.model';\n\n@Component({\n  selector: 'app-user-card',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './user-card.component.html',\n  styleUrls: ['./user-card.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class UserCardComponent {\n  @Input() user!: User;\n  @Output() userClick = new EventEmitter<User>();\n}"
+          }
+        ]
+      },
+      "signals": {
+        "title": "Migration vers Angular Signals",
+        "prompt": "Convertis ce service Angular pour utiliser les Signals au lieu des Observables. Le service doit:\n1. Utiliser signal() pour l'état\n2. Utiliser computed() pour les valeurs calculées\n3. Utiliser effect() pour les effets de bord\n4. Exposer les signaux via des getters\n5. Suivre les patterns Signals",
+        "examples": [
+          {
+            "template": "import { Injectable, signal, computed, effect } from '@angular/core';\nimport { User } from '../models/user.model';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class UserService {\n  private users = signal<User[]>([]);\n  private selectedUserId = signal<number | null>(null);\n  \n  // Computed values\n  public readonly selectedUser = computed(() => {\n    const userId = this.selectedUserId();\n    return userId ? this.users().find(u => u.id === userId) : null;\n  });\n  \n  public readonly userCount = computed(() => this.users().length);\n  \n  // Actions\n  setUsers(users: User[]) {\n    this.users.set(users);\n  }\n  \n  selectUser(userId: number) {\n    this.selectedUserId.set(userId);\n  }\n  \n  constructor() {\n    // Effects\n    effect(() => {\n      console.log('Selected user changed:', this.selectedUser());\n    });\n  }\n}"
+          }
+        ]
+      },
+      "material": {
+        "title": "Configuration Angular Material",
+        "prompt": "Configure Angular Material pour ce projet. La configuration doit:\n1. Importer les modules Material nécessaires\n2. Configurer un thème personnalisé\n3. Configurer les typographies\n4. Configurer les palettes de couleurs\n5. Inclure les icônes et animations",
+        "examples": [
+          {
+            "template": "import { NgModule } from '@angular/core';\nimport { BrowserModule } from '@angular/platform-browser';\nimport { BrowserAnimationsModule } from '@angular/platform-browser/animations';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatCardModule } from '@angular/material/card';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatToolbarModule } from '@angular/material/toolbar';\n\n@NgModule({\n  imports: [\n    BrowserModule,\n    BrowserAnimationsModule,\n    MatButtonModule,\n    MatCardModule,\n    MatIconModule,\n    MatToolbarModule\n  ],\n  exports: [\n    MatButtonModule,\n    MatCardModule,\n    MatIconModule,\n    MatToolbarModule\n  ]\n})\nexport class MaterialModule { }"
+          }
+        ]
+      }
+    },
+    "react": {
+      "hooks": {
+        "title": "Création de Custom Hooks",
+        "prompt": "Crée un custom hook React pour cette fonctionnalité. Le hook doit:\n1. Utiliser useState, useEffect, useCallback, useMemo\n2. Gérer les états de loading et d'erreur\n3. Implémenter la logique métier\n4. Retourner les valeurs et fonctions nécessaires\n5. Suivre les conventions React Hooks",
+        "examples": [
+          {
+            "template": "import { useState, useEffect, useCallback, useMemo } from 'react';\n\nexport const useUserData = (userId: number) => {\n  const [user, setUser] = useState(null);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n  \n  const fetchUser = useCallback(async () => {\n    try {\n      setLoading(true);\n      const response = await fetch(`/api/users/${userId}`);\n      const data = await response.json();\n      setUser(data);\n    } catch (err) {\n      setError(err);\n    } finally {\n      setLoading(false);\n    }\n  }, [userId]);\n  \n  const userFullName = useMemo(() => {\n    return user ? `${user.firstName} ${user.lastName}` : '';\n  }, [user]);\n  \n  useEffect(() => {\n    fetchUser();\n  }, [fetchUser]);\n  \n  return {\n    user,\n    loading,\n    error,\n    userFullName,\n    refetch: fetchUser\n  };\n};"
+          }
+        ]
+      },
+      "context": {
+        "title": "Configuration React Context",
+        "prompt": "Crée un React Context pour gérer l'état global de cette application. Le context doit:\n1. Définir le type d'état et les actions\n2. Créer le Context et Provider\n3. Implémenter les actions avec useReducer\n4. Fournir un hook personnalisé pour l'utilisation\n5. Optimiser avec useMemo et useCallback",
+        "examples": [
+          {
+            "template": "import React, { createContext, useContext, useReducer, useMemo, useCallback } from 'react';\n\n// Types\ntype User = {\n  id: number;\n  name: string;\n  email: string;\n};\n\ntype AppState = {\n  user: User | null;\n  isAuthenticated: boolean;\n  loading: boolean;\n};\n\ntype AppAction = \n  | { type: 'LOGIN_START' }\n  | { type: 'LOGIN_SUCCESS'; payload: User }\n  | { type: 'LOGIN_FAILURE' }\n  | { type: 'LOGOUT' };\n\n// Initial state\nconst initialState: AppState = {\n  user: null,\n  isAuthenticated: false,\n  loading: false\n};\n\n// Reducer\nconst appReducer = (state: AppState, action: AppAction): AppState => {\n  switch (action.type) {\n    case 'LOGIN_START':\n      return { ...state, loading: true };\n    case 'LOGIN_SUCCESS':\n      return {\n        ...state,\n        user: action.payload,\n        isAuthenticated: true,\n        loading: false\n      };\n    case 'LOGIN_FAILURE':\n      return { ...state, loading: false };\n    case 'LOGOUT':\n      return { ...initialState };\n    default:\n      return state;\n  }\n};\n\n// Context\nconst AppContext = createContext<{\n  state: AppState;\n  dispatch: React.Dispatch<AppAction>;\n} | null>(null);\n\n// Provider\nexport const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {\n  const [state, dispatch] = useReducer(appReducer, initialState);\n  \n  const value = useMemo(() => ({ state, dispatch }), [state]);\n  \n  return (\n    <AppContext.Provider value={value}>\n      {children}\n    </AppContext.Provider>\n  );\n};\n\n// Hook\nexport const useApp = () => {\n  const context = useContext(AppContext);\n  if (!context) {\n    throw new Error('useApp must be used within AppProvider');\n  }\n  return context;\n};"
+          }
+        ]
+      },
+      "memo": {
+        "title": "Optimisation avec React.memo",
+        "prompt": "Optimise ce composant React avec React.memo et les hooks de performance. Le composant doit:\n1. Utiliser React.memo pour éviter les re-renders\n2. Utiliser useCallback pour les fonctions\n3. Utiliser useMemo pour les calculs coûteux\n4. Optimiser les props avec des types appropriés\n5. Suivre les patterns de performance React",
+        "examples": [
+          {
+            "template": "import React, { useCallback, useMemo } from 'react';\n\ntype UserCardProps = {\n  user: {\n    id: number;\n    name: string;\n    email: string;\n    avatar: string;\n  };\n  onUserClick: (userId: number) => void;\n  isSelected: boolean;\n};\n\nconst UserCard: React.FC<UserCardProps> = React.memo(({ \n  user, \n  onUserClick, \n  isSelected \n}) => {\n  const handleClick = useCallback(() => {\n    onUserClick(user.id);\n  }, [onUserClick, user.id]);\n  \n  const userInitials = useMemo(() => {\n    return user.name\n      .split(' ')\n      .map(n => n[0])\n      .join('')\n      .toUpperCase();\n  }, [user.name]);\n  \n  return (\n    <div \n      className={`user-card ${isSelected ? 'selected' : ''}`}\n      onClick={handleClick}\n    >\n      <img src={user.avatar} alt={user.name} />\n      <div className=\"user-info\">\n        <h3>{user.name}</h3>\n        <p>{user.email}</p>\n        <span className=\"initials\">{userInitials}</span>\n      </div>\n    </div>\n  );\n});\n\nUserCard.displayName = 'UserCard';\n\nexport default UserCard;"
+          }
+        ]
+      }
+    },
+    "next": {
+      "app-router": {
+        "title": "Migration vers App Router",
+        "prompt": "Convertis cette page Next.js pour utiliser l'App Router (Next.js 13+). La page doit:\n1. Utiliser la structure app/ directory\n2. Implémenter les Server Components\n3. Utiliser les layouts imbriqués\n4. Configurer les metadata dynamiques\n5. Suivre les conventions App Router",
+        "examples": [
+          {
+            "template": "// app/layout.tsx\nimport { Inter } from 'next/font/google';\nimport './globals.css';\n\nexport const metadata = {\n  title: 'My App',\n  description: 'My awesome app',\n};\n\nconst inter = Inter({ subsets: ['latin'] });\n\nexport default function RootLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return (\n    <html lang=\"en\">\n      <body className={inter.className}>\n        <header>\n          <nav>{/* Navigation */}</nav>\n        </header>\n        <main>{children}</main>\n        <footer>{/* Footer */}</footer>\n      </body>\n    </html>\n  );\n}\n\n// app/users/page.tsx\nimport { Suspense } from 'react';\nimport UserList from './UserList';\nimport Loading from './loading';\n\nexport default function UsersPage() {\n  return (\n    <div>\n      <h1>Users</h1>\n      <Suspense fallback={<Loading />}>\n        <UserList />\n      </Suspense>\n    </div>\n  );\n}\n\n// app/users/UserList.tsx\nasync function getUsers() {\n  const res = await fetch('https://api.example.com/users');\n  return res.json();\n}\n\nexport default async function UserList() {\n  const users = await getUsers();\n  \n  return (\n    <ul>\n      {users.map((user) => (\n        <li key={user.id}>{user.name}</li>\n      ))}\n    </ul>\n  );\n}"
+          }
+        ]
+      },
+      "server-components": {
+        "title": "Optimisation avec Server Components",
+        "prompt": "Optimise ce composant Next.js avec les Server Components. Le composant doit:\n1. Utiliser les Server Components pour le rendu côté serveur\n2. Implémenter le streaming avec Suspense\n3. Utiliser les Client Components quand nécessaire\n4. Optimiser les données avec le cache\n5. Suivre les patterns Server Components",
+        "examples": [
+          {
+            "template": "// app/components/UserProfile.tsx (Server Component)\nimport { Suspense } from 'react';\nimport UserAvatar from './UserAvatar';\nimport UserStats from './UserStats';\nimport LoadingSpinner from './LoadingSpinner';\n\nasync function getUserData(userId: string) {\n  // Cette fonction s'exécute côté serveur\n  const res = await fetch(`https://api.example.com/users/${userId}`, {\n    next: { revalidate: 3600 } // Cache pour 1 heure\n  });\n  return res.json();\n}\n\nexport default async function UserProfile({ userId }: { userId: string }) {\n  const user = await getUserData(userId);\n  \n  return (\n    <div className=\"user-profile\">\n      <h1>{user.name}</h1>\n      <Suspense fallback={<LoadingSpinner />}>\n        <UserAvatar userId={userId} />\n      </Suspense>\n      <Suspense fallback={<LoadingSpinner />}>\n        <UserStats userId={userId} />\n      </Suspense>\n    </div>\n  );\n}\n\n// app/components/UserAvatar.tsx (Client Component)\n'use client';\n\nimport { useState } from 'react';\nimport Image from 'next/image';\n\nexport default function UserAvatar({ userId }: { userId: string }) {\n  const [isLoading, setIsLoading] = useState(true);\n  \n  return (\n    <div className=\"avatar\">\n      <Image\n        src={`/api/avatar/${userId}`}\n        alt=\"User avatar\"\n        width={100}\n        height={100}\n        onLoad={() => setIsLoading(false)}\n        className={isLoading ? 'loading' : ''}\n      />\n    </div>\n  );\n}"
+          }
+        ]
+      }
+    }
+  }

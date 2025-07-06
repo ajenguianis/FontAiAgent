@@ -1,0 +1,304 @@
+{
+    "frameworks": {
+      "vue": {
+        "name": "Vue.js",
+        "versions": ["2.x", "3.x"],
+        "features": {
+          "composition-api": {
+            "description": "Composition API pour une meilleure réutilisabilité",
+            "priority": "high",
+            "code": "import { ref, computed, onMounted } from 'vue'",
+            "benefits": ["Meilleure réutilisabilité", "TypeScript support", "Performance améliorée"]
+          },
+          "options-api": {
+            "description": "Options API pour la compatibilité",
+            "priority": "medium",
+            "code": "export default { data() { return {} }, methods: {} }",
+            "benefits": ["Facile à apprendre", "Compatibilité Vue 2"]
+          },
+          "pinia": {
+            "description": "Gestion d'état moderne",
+            "priority": "high",
+            "code": "import { defineStore } from 'pinia'",
+            "benefits": ["TypeScript support", "DevTools", "Composition API"]
+          },
+          "vue-router": {
+            "description": "Routing officiel",
+            "priority": "high",
+            "code": "import { createRouter, createWebHistory } from 'vue-router'",
+            "benefits": ["Routing déclaratif", "Lazy loading", "Navigation guards"]
+          }
+        },
+        "bestPractices": [
+          "Utiliser la Composition API pour les nouveaux projets",
+          "Implémenter le lazy loading des composants",
+          "Utiliser les composants asynchrones",
+          "Optimiser avec v-memo et v-once",
+          "Utiliser les scoped styles pour l'encapsulation"
+        ],
+        "performance": [
+          "Utiliser v-memo pour éviter les re-renders inutiles",
+          "Implémenter le code splitting avec import()",
+          "Optimiser les watchers avec deep: false",
+          "Utiliser les composants asynchrones"
+        ],
+        "accessibility": [
+          "Ajouter des attributs ARIA appropriés",
+          "Gérer le focus avec v-focus",
+          "Utiliser les annonces d'état avec aria-live",
+          "Assurer la navigation au clavier"
+        ]
+      },
+      "nuxt": {
+        "name": "Nuxt.js",
+        "versions": ["2.x", "3.x"],
+        "features": {
+          "ssr": {
+            "description": "Server-Side Rendering",
+            "priority": "high",
+            "benefits": ["SEO amélioré", "Performance", "Meilleure UX"]
+          },
+          "static": {
+            "description": "Génération statique",
+            "priority": "medium",
+            "benefits": ["Performance maximale", "Déploiement simple"]
+          },
+          "auto-imports": {
+            "description": "Import automatique des composants",
+            "priority": "high",
+            "benefits": ["Moins de code", "Meilleure DX"]
+          },
+          "modules": {
+            "description": "Système de modules",
+            "priority": "medium",
+            "benefits": ["Extensibilité", "Écosystème riche"]
+          }
+        },
+        "bestPractices": [
+          "Utiliser les layouts pour la structure commune",
+          "Implémenter les middlewares pour l'authentification",
+          "Optimiser les images avec @nuxt/image",
+          "Utiliser les composants auto-importés",
+          "Configurer les meta tags dynamiques"
+        ],
+        "performance": [
+          "Utiliser le lazy loading des pages",
+          "Optimiser les images avec @nuxt/image",
+          "Configurer le caching approprié",
+          "Utiliser les composants asynchrones"
+        ],
+        "accessibility": [
+          "Configurer les meta tags d'accessibilité",
+          "Utiliser les composants accessibles",
+          "Implémenter la navigation au clavier",
+          "Tester avec les lecteurs d'écran"
+        ]
+      },
+      "angular": {
+        "name": "Angular",
+        "versions": ["14.x", "15.x", "16.x", "17.x"],
+        "features": {
+          "standalone": {
+            "description": "Composants standalone",
+            "priority": "high",
+            "code": "@Component({ standalone: true })",
+            "benefits": ["Moins de NgModules", "Tree-shaking amélioré", "Simplicité"]
+          },
+          "signals": {
+            "description": "Système de réactivité moderne",
+            "priority": "high",
+            "code": "import { signal, computed } from '@angular/core'",
+            "benefits": ["Performance", "Simplicité", "TypeScript support"]
+          },
+          "rxjs": {
+            "description": "Programmation réactive",
+            "priority": "medium",
+            "code": "import { Observable } from 'rxjs'",
+            "benefits": ["Gestion d'état avancée", "Opérateurs puissants"]
+          },
+          "angular-material": {
+            "description": "Composants UI officiels",
+            "priority": "high",
+            "benefits": ["Accessibilité", "Design cohérent", "TypeScript support"]
+          }
+        },
+        "bestPractices": [
+          "Utiliser les composants standalone",
+          "Implémenter OnPush change detection",
+          "Utiliser les pipes purs",
+          "Optimiser avec trackBy dans *ngFor",
+          "Utiliser les services pour la logique métier"
+        ],
+        "performance": [
+          "Utiliser OnPush change detection strategy",
+          "Optimiser les pipes avec pure: true",
+          "Implémenter trackBy dans *ngFor",
+          "Utiliser les composants standalone",
+          "Lazy loading des modules"
+        ],
+        "accessibility": [
+          "Utiliser Angular Material pour l'accessibilité",
+          "Configurer les annonces avec LiveAnnouncer",
+          "Implémenter la navigation au clavier",
+          "Tester avec les lecteurs d'écran"
+        ]
+      },
+      "react": {
+        "name": "React",
+        "versions": ["17.x", "18.x"],
+        "features": {
+          "hooks": {
+            "description": "Hooks pour la logique d'état",
+            "priority": "high",
+            "code": "import { useState, useEffect } from 'react'",
+            "benefits": ["Logique réutilisable", "Moins de classes", "Performance"]
+          },
+          "context": {
+            "description": "API Context pour l'état global",
+            "priority": "medium",
+            "code": "import { createContext, useContext } from 'react'",
+            "benefits": ["État global simple", "Pas de props drilling"]
+          },
+          "memo": {
+            "description": "Optimisation des re-renders",
+            "priority": "high",
+            "code": "import { memo } from 'react'",
+            "benefits": ["Performance", "Éviter les re-renders inutiles"]
+          }
+        },
+        "bestPractices": [
+          "Utiliser les hooks personnalisés",
+          "Implémenter React.memo pour l'optimisation",
+          "Utiliser useCallback et useMemo",
+          "Séparer les composants présentationnels et conteneurs",
+          "Utiliser TypeScript pour la sécurité des types"
+        ],
+        "performance": [
+          "Utiliser React.memo pour éviter les re-renders",
+          "Implémenter useCallback pour les fonctions",
+          "Utiliser useMemo pour les calculs coûteux",
+          "Lazy loading avec React.lazy",
+          "Code splitting avec import()"
+        ],
+        "accessibility": [
+          "Utiliser les hooks d'accessibilité",
+          "Implémenter la gestion du focus",
+          "Ajouter des attributs ARIA",
+          "Tester avec les lecteurs d'écran"
+        ]
+      },
+      "next": {
+        "name": "Next.js",
+        "versions": ["12.x", "13.x", "14.x"],
+        "features": {
+          "ssr": {
+            "description": "Server-Side Rendering",
+            "priority": "high",
+            "benefits": ["SEO", "Performance", "Meilleure UX"]
+          },
+          "ssg": {
+            "description": "Static Site Generation",
+            "priority": "high",
+            "benefits": ["Performance maximale", "Déploiement simple"]
+          },
+          "app-router": {
+            "description": "App Router (Next.js 13+)",
+            "priority": "high",
+            "benefits": ["Layouts imbriqués", "Server Components", "Streaming"]
+          },
+          "pages-router": {
+            "description": "Pages Router (legacy)",
+            "priority": "medium",
+            "benefits": ["Stabilité", "Écosystème mature"]
+          }
+        },
+        "bestPractices": [
+          "Utiliser l'App Router pour les nouveaux projets",
+          "Implémenter les Server Components",
+          "Optimiser les images avec next/image",
+          "Utiliser les layouts imbriqués",
+          "Configurer les meta tags dynamiques"
+        ],
+        "performance": [
+          "Utiliser next/image pour l'optimisation",
+          "Implémenter le code splitting automatique",
+          "Configurer le caching approprié",
+          "Utiliser les Server Components",
+          "Optimiser avec next/font"
+        ],
+        "accessibility": [
+          "Configurer les meta tags d'accessibilité",
+          "Utiliser les composants accessibles",
+          "Implémenter la navigation au clavier",
+          "Tester avec les lecteurs d'écran"
+        ]
+      }
+    },
+    "design": {
+      "trends": {
+        "glassmorphism": {
+          "description": "Effet de verre moderne",
+          "css": "backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1);",
+          "frameworks": ["vue", "react", "angular"]
+        },
+        "micro-interactions": {
+          "description": "Animations subtiles pour l'engagement",
+          "css": "transition: all 0.3s ease;",
+          "frameworks": ["vue", "react", "angular"]
+        },
+        "dark-mode": {
+          "description": "Mode sombre pour l'accessibilité",
+          "css": "@media (prefers-color-scheme: dark)",
+          "frameworks": ["vue", "react", "angular"]
+        },
+        "gradients": {
+          "description": "Dégradés modernes",
+          "css": "background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);",
+          "frameworks": ["vue", "react", "angular"]
+        }
+      },
+      "colorPalettes": {
+        "modern": {
+          "primary": ["#3B82F6", "#1D4ED8", "#1E40AF"],
+          "secondary": ["#10B981", "#059669", "#047857"],
+          "accent": ["#F59E0B", "#D97706", "#B45309"],
+          "neutral": ["#6B7280", "#374151", "#1F2937", "#111827"]
+        },
+        "creative": {
+          "primary": ["#8B5CF6", "#7C3AED", "#6D28D9"],
+          "secondary": ["#EC4899", "#DB2777", "#BE185D"],
+          "accent": ["#F97316", "#EA580C", "#C2410C"],
+          "neutral": ["#9CA3AF", "#6B7280", "#4B5563", "#374151"]
+        },
+        "corporate": {
+          "primary": ["#1F2937", "#111827", "#0F172A"],
+          "secondary": ["#6B7280", "#4B5563", "#374151"],
+          "accent": ["#3B82F6", "#2563EB", "#1D4ED8"],
+          "neutral": ["#F9FAFB", "#F3F4F6", "#E5E7EB", "#D1D5DB"]
+        }
+      },
+      "typography": {
+        "modern": {
+          "fonts": ["Inter", "Roboto", "Open Sans"],
+          "h1": "2.5rem / 3rem",
+          "h2": "2rem / 2.5rem",
+          "h3": "1.5rem / 2rem",
+          "body": "1rem / 1.5rem"
+        },
+        "creative": {
+          "fonts": ["Poppins", "Montserrat", "Raleway"],
+          "h1": "3rem / 3.5rem",
+          "h2": "2.25rem / 2.75rem",
+          "h3": "1.75rem / 2.25rem",
+          "body": "1.125rem / 1.75rem"
+        },
+        "corporate": {
+          "fonts": ["Source Sans Pro", "Roboto", "Arial"],
+          "h1": "2.25rem / 2.75rem",
+          "h2": "1.875rem / 2.25rem",
+          "h3": "1.5rem / 2rem",
+          "body": "1rem / 1.625rem"
+        }
+      }
+    }
+  }

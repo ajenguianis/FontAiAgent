@@ -1,0 +1,233 @@
+{
+    "vue": {
+      "composition-api": {
+        "title": "Utilisation de la Composition API",
+        "description": "Vérifier l'utilisation de la Composition API dans les composants Vue 3",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "export default {\\s*data\\(\\)",
+            "message": "Considérer la migration vers la Composition API",
+            "fix": "Migrer vers setup() avec ref() et reactive()"
+          },
+          {
+            "pattern": "this\\.\\w+",
+            "message": "Éviter l'utilisation de 'this' dans la Composition API",
+            "fix": "Utiliser les variables réactives directement"
+          }
+        ]
+      },
+      "pinia": {
+        "title": "Gestion d'état avec Pinia",
+        "description": "Vérifier l'utilisation de Pinia pour la gestion d'état",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "Vuex\\.Store",
+            "message": "Migrer de Vuex vers Pinia",
+            "fix": "Utiliser defineStore() de Pinia"
+          }
+        ]
+      },
+      "vite": {
+        "title": "Configuration Vite",
+        "description": "Vérifier la configuration Vite pour les performances",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "webpack",
+            "message": "Considérer la migration vers Vite",
+            "fix": "Configurer Vite pour un développement plus rapide"
+          }
+        ]
+      }
+    },
+    "angular": {
+      "standalone": {
+        "title": "Composants Standalone",
+        "description": "Vérifier l'utilisation des composants standalone",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "@NgModule",
+            "message": "Considérer la migration vers les composants standalone",
+            "fix": "Utiliser standalone: true dans les composants"
+          }
+        ]
+      },
+      "signals": {
+        "title": "Utilisation des Signals",
+        "description": "Vérifier l'utilisation des Signals pour la réactivité",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "Observable",
+            "message": "Considérer l'utilisation des Signals",
+            "fix": "Migrer vers signal() et computed()"
+          }
+        ]
+      },
+      "change-detection": {
+        "title": "Stratégie de Change Detection",
+        "description": "Vérifier l'utilisation d'OnPush",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "ChangeDetectionStrategy\\.Default",
+            "message": "Utiliser OnPush pour de meilleures performances",
+            "fix": "Configurer OnPush change detection"
+          }
+        ]
+      }
+    },
+    "react": {
+      "hooks": {
+        "title": "Utilisation des Hooks",
+        "description": "Vérifier l'utilisation correcte des Hooks",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "class.*extends.*Component",
+            "message": "Migrer vers les Hooks",
+            "fix": "Utiliser useState, useEffect, etc."
+          },
+          {
+            "pattern": "useEffect\\([^,]*\\)",
+            "message": "Ajouter les dépendances dans useEffect",
+            "fix": "Spécifier le tableau de dépendances"
+          }
+        ]
+      },
+      "memo": {
+        "title": "Optimisation avec React.memo",
+        "description": "Vérifier l'utilisation de React.memo",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "export default function",
+            "message": "Considérer React.memo pour l'optimisation",
+            "fix": "Envelopper le composant avec React.memo"
+          }
+        ]
+      },
+      "context": {
+        "title": "Utilisation du Context",
+        "description": "Vérifier l'utilisation appropriée du Context",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "props\\.\\w+",
+            "message": "Considérer le Context pour l'état global",
+            "fix": "Utiliser createContext pour l'état partagé"
+          }
+        ]
+      }
+    },
+    "next": {
+      "app-router": {
+        "title": "App Router",
+        "description": "Vérifier l'utilisation de l'App Router",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "pages/",
+            "message": "Migrer vers l'App Router",
+            "fix": "Utiliser la structure app/ directory"
+          }
+        ]
+      },
+      "server-components": {
+        "title": "Server Components",
+        "description": "Vérifier l'utilisation des Server Components",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "'use client'",
+            "message": "Utiliser les Server Components quand possible",
+            "fix": "Retirer 'use client' pour les Server Components"
+          }
+        ]
+      },
+      "image-optimization": {
+        "title": "Optimisation des Images",
+        "description": "Vérifier l'utilisation de next/image",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "<img",
+            "message": "Utiliser next/image pour l'optimisation",
+            "fix": "Remplacer <img> par <Image> de next/image"
+          }
+        ]
+      }
+    },
+    "design": {
+      "accessibility": {
+        "title": "Accessibilité",
+        "description": "Vérifier l'accessibilité des composants",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "<img[^>]*>",
+            "message": "Ajouter l'attribut alt aux images",
+            "fix": "Ajouter alt=\"description\""
+          },
+          {
+            "pattern": "<button[^>]*>",
+            "message": "Ajouter aria-label si nécessaire",
+            "fix": "Ajouter aria-label=\"description\""
+          }
+        ]
+      },
+      "responsive": {
+        "title": "Design Responsive",
+        "description": "Vérifier le design responsive",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "width:\\s*\\d+px",
+            "message": "Utiliser des unités relatives",
+            "fix": "Remplacer px par rem, em, ou %"
+          }
+        ]
+      },
+      "colors": {
+        "title": "Contraste des Couleurs",
+        "description": "Vérifier le contraste des couleurs",
+        "severity": "high",
+        "rules": [
+          {
+            "pattern": "color:\\s*#[0-9a-fA-F]{3,6}",
+            "message": "Vérifier le contraste des couleurs",
+            "fix": "Utiliser des couleurs avec un contraste suffisant"
+          }
+        ]
+      }
+    },
+    "performance": {
+      "lazy-loading": {
+        "title": "Lazy Loading",
+        "description": "Vérifier l'utilisation du lazy loading",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "import.*from.*'[^']*'",
+            "message": "Considérer le lazy loading pour les imports",
+            "fix": "Utiliser import() dynamique"
+          }
+        ]
+      },
+      "bundle-size": {
+        "title": "Taille du Bundle",
+        "description": "Vérifier la taille du bundle",
+        "severity": "medium",
+        "rules": [
+          {
+            "pattern": "import.*\\*.*from",
+            "message": "Éviter les imports globaux",
+            "fix": "Importer seulement ce qui est nécessaire"
+          }
+        ]
+      }
+    }
+  }
