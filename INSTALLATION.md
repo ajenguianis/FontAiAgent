@@ -160,6 +160,18 @@ cd .vscode/frontend-expert-agent
 npm install
 ```
 
+### **Erreur: Problèmes de chemins WSL dans VS Code**
+```bash
+# Corriger les chemins WSL pour les projets déjà installés
+node fix-wsl-paths.js /chemin/vers/votre/projet
+
+# Ou depuis le projet FontAiAgent
+node fix-wsl-paths.js /chemin/vers/projet-cible
+```
+
+**Symptômes :** Erreurs de type `Cannot find module` avec des chemins Windows dans WSL  
+**Solution :** Le script `fix-wsl-paths.js` corrige automatiquement les configurations VS Code
+
 ## 📊 Comparaison des Méthodes
 
 | Méthode | Avantages | Inconvénients | Recommandé pour |
